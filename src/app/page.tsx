@@ -23,7 +23,7 @@ export default function Home() {
         </div>
       </header>
       
-      <main className="flex-1 flex flex-col overflow-x-auto">
+      <main className="flex-1 flex flex-col">
         <DataTable data={data} />
       </main>
 
