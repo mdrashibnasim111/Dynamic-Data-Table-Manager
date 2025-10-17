@@ -39,7 +39,6 @@ declare module '@tanstack/react-table' {
     removeRow: (rowIndex: number) => void;
     setData: (data: TData[]) => void
     addColumn: (column: ColumnDef<TData>) => void
-    isEditing: boolean
   }
 }
 
@@ -54,7 +53,6 @@ export function DataTable<TData extends User, TValue>({
   const [data, setData] = React.useState(defaultData)
   const [originalData, setOriginalData] = React.useState(defaultData)
   const [isMounted, setIsMounted] = React.useState(false);
-  const [isEditing, setIsEditing] = React.useState(false)
 
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
@@ -70,25 +68,6 @@ export function DataTable<TData extends User, TValue>({
     setIsMounted(true);
   }, []);
 
-  const handleSave = () => {
-    setOriginalData(data)
-    setIsEditing(false)
-    toast({
-      title: "Changes Saved",
-      description: "All your changes have been saved successfully.",
-    })
-  }
-
-  const handleCancel = () => {
-    setData(originalData)
-    setIsEditing(false)
-    toast({
-      title: "Changes Canceled",
-      description: "All changes have been discarded.",
-      variant: "destructive",
-    })
-  }
-
   const table = useReactTable({
     data,
     columns,
@@ -100,7 +79,6 @@ export function DataTable<TData extends User, TValue>({
       globalFilter,
     },
     meta: {
-      isEditing,
       updateData: (rowIndex, columnId, value) => {
         setData(old =>
           old.map((row, index) => {
@@ -147,69 +125,71 @@ export function DataTable<TData extends User, TValue>({
   })
 
   return (
-    <div className="flex flex-col min-h-0 space-y-4 flex-1">
+    <div className="flex-1 flex flex-col min-h-0">
+      <div className="px-4">
         <DataTableToolbar 
           table={table}
           setData={(newData) => {
             setData(newData)
             setOriginalData(newData)
           }}
-          isEditing={isEditing}
-          setIsEditing={setIsEditing}
-          handleSave={handleSave}
-          handleCancel={handleCancel}
         />
-      <div className="overflow-x-auto table-clay rounded-lg">
-        <div className="min-w-full inline-block align-middle">
-            <Table className="min-w-[720px]">
-              <TableHeader className="bg-secondary/70 dark:bg-dark-surface-light backdrop-blur-sm">
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id} className="border-border dark:border-dark-border">
-                    {headerGroup.headers.map((header) => {
-                      return (
-                        <TableHead key={header.id} className="px-4 py-3 text-left text-xs font-medium text-muted-foreground dark:text-dark-text-secondary uppercase tracking-wider whitespace-nowrap">
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                        </TableHead>
-                      )
-                    })}
-                  </TableRow>
-                ))}
-              </TableHeader>
-              <TableBody className="divide-y divide-border/50 dark:divide-dark-border bg-white/50 dark:bg-dark-surface/50 backdrop-blur-sm">
-                {table.getRowModel().rows?.length ? (
-                  table.getRowModel().rows.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      data-state={row.getIsSelected() && "selected"}
-                      className="hover:bg-accent/50"
-                    >
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id} className="px-4 py-3 whitespace-nowrap text-sm text-foreground dark:text-dark-text-primary">
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      ))}
+      </div>
+      <div className="flex-1 overflow-auto">
+        <div className="px-4">
+          <div className="table-clay">
+            <div className="overflow-hidden rounded-lg">
+              <Table className="min-w-full divide-y divide-border">
+                <TableHeader className="bg-secondary/70 dark:bg-dark-surface-light backdrop-blur-sm">
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <TableRow key={headerGroup.id} className="border-border dark:border-dark-border">
+                      {headerGroup.headers.map((header) => {
+                        return (
+                          <TableHead key={header.id} className="px-4 py-3 text-left text-xs font-medium text-muted-foreground dark:text-dark-text-secondary uppercase tracking-wider">
+                            {header.isPlaceholder
+                              ? null
+                              : flexRender(
+                                  header.column.columnDef.header,
+                                  header.getContext()
+                                )}
+                          </TableHead>
+                        )
+                      })}
                     </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell
-                      colSpan={columns.length}
-                      className="h-24 text-center"
-                    >
-                      No results.
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
+                  ))}
+                </TableHeader>
+                <TableBody className="divide-y divide-border/50 dark:divide-dark-border bg-white/50 dark:bg-dark-surface/50 backdrop-blur-sm">
+                  {table.getRowModel().rows?.length ? (
+                    table.getRowModel().rows.map((row) => (
+                      <TableRow
+                        key={row.id}
+                        data-state={row.getIsSelected() && "selected"}
+                        className="hover:bg-accent/50"
+                      >
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id} className="px-4 py-3 whitespace-nowrap text-sm text-foreground dark:text-dark-text-primary">
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell
+                        colSpan={columns.length}
+                        className="h-24 text-center"
+                      >
+                        No results.
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          </div>
         </div>
       </div>
       <DataTablePagination table={table} />

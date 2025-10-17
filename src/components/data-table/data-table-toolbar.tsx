@@ -2,7 +2,7 @@
 "use client"
 
 import { Table } from "@tanstack/react-table"
-import { FileDown, FileUp, SlidersHorizontal, Search, Save, XCircle, Pencil } from "lucide-react"
+import { FileDown, FileUp, SlidersHorizontal, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"
@@ -15,19 +15,11 @@ import { User } from "@/lib/data"
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
   setData: (data: TData[]) => void
-  isEditing: boolean
-  setIsEditing: (isEditing: boolean) => void
-  handleSave: () => void
-  handleCancel: () => void
 }
 
 export function DataTableToolbar<TData>({
   table,
   setData,
-  isEditing,
-  setIsEditing,
-  handleSave,
-  handleCancel,
 }: DataTableToolbarProps<TData>) {
   const { toast } = useToast()
   const fileInputRef = React.useRef<HTMLInputElement>(null)
@@ -128,40 +120,6 @@ export function DataTableToolbar<TData>({
                 <FileDown className="h-4 w-4" />
                 <span>Export</span>
               </Button>
-          </div>
-          <div className="flex flex-grow sm:flex-grow-0 items-center gap-2 w-full sm:w-auto">
-            {isEditing ? (
-              <>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleSave}
-                  className="btn-clay flex flex-1 items-center justify-center gap-1.5 text-xs font-medium py-2.5 px-3 rounded-lg bg-green-500/20 hover:bg-green-500/30 border-green-500/50 dark:bg-green-500/20 dark:hover:bg-green-500/30 dark:border-green-500/50"
-                >
-                  <Save className="h-4 w-4" />
-                  <span>Save All</span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleCancel}
-                  className="btn-clay flex flex-1 items-center justify-center gap-1.5 text-xs font-medium py-2.5 px-3 rounded-lg bg-red-500/20 hover:bg-red-500/30 border-red-500/50 dark:bg-red-500/20 dark:hover:bg-red-500/30 dark:border-red-500/50"
-                >
-                  <XCircle className="h-4 w-4" />
-                  <span>Cancel All</span>
-                </Button>
-              </>
-            ) : (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsEditing(true)}
-                className="btn-clay flex flex-1 items-center justify-center gap-1.5 text-xs font-medium py-2.5 px-3 rounded-lg"
-              >
-                <Pencil className="h-4 w-4" />
-                <span>Edit</span>
-              </Button>
-            )}
           </div>
         </div>
       </div>

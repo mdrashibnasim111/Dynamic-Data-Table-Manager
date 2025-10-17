@@ -15,14 +15,14 @@ export const EditableCell = ({
 }: CellContext<User, unknown>) => {
   const initialValue = getValue() as string | number
   const [value, setValue] = useState(initialValue)
+  const [isEditing, setIsEditing] = useState(false)
   const { toast } = useToast()
 
   const tableMeta = table.options.meta;
-  const isEditing = tableMeta?.isEditing
   
   const onBlur = () => {
-    // In global edit mode, we don't save on blur. Saving is handled by the main "Save" button.
-    // We still do validation though.
+    setIsEditing(false)
+    
     if (column.id === 'age' && isNaN(Number(value))) {
         toast({
             variant: "destructive",
@@ -35,7 +35,15 @@ export const EditableCell = ({
 
     if (initialValue !== value) {
         tableMeta?.updateData?.(row.index, column.id, value)
+        toast({
+            title: "Cell Updated",
+            description: "The cell has been successfully updated.",
+        })
     }
+  }
+
+  const handleDoubleClick = () => {
+    setIsEditing(true)
   }
 
   useEffect(() => {
@@ -44,7 +52,11 @@ export const EditableCell = ({
   
   if (!isEditing) {
     return (
-      <div className="w-full h-full min-h-[1.5rem] px-3 py-2 -mx-3 -my-2">
+      <div 
+        onDoubleClick={handleDoubleClick} 
+        className="w-full h-full min-h-[1.5rem] px-3 py-2 -mx-3 -my-2 cursor-pointer"
+        title="Double-click to edit"
+      >
         <span>{value}</span>
       </div>
     )
@@ -55,7 +67,7 @@ export const EditableCell = ({
       value={value as string}
       onChange={(e) => setValue(e.target.value)}
       onBlur={onBlur}
-      autoFocus={false}
+      autoFocus
       className="h-8 text-sm bg-transparent border-primary/50"
     />
   )
