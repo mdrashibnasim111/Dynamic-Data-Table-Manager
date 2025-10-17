@@ -3,7 +3,6 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUp } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { User } from "@/lib/data"
 import { DataTableRowActions } from "./data-table-row-actions"
 
@@ -17,7 +16,7 @@ export const columns: ColumnDef<User>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Name
-          {column.getIsSorted() && <ArrowUp className="ml-2 h-4 w-4" />}
+          {column.getIsSorted() && <ArrowUp className={`ml-2 h-4 w-4 ${column.getIsSorted() === 'desc' ? 'rotate-180' : ''}`} />}
         </div>
       )
     },
@@ -32,7 +31,7 @@ export const columns: ColumnDef<User>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Email
-           {column.getIsSorted() && <ArrowUp className="ml-2 h-4 w-4" />}
+           {column.getIsSorted() && <ArrowUp className={`ml-2 h-4 w-4 ${column.getIsSorted() === 'desc' ? 'rotate-180' : ''}`} />}
         </div>
       )
     },
@@ -47,7 +46,7 @@ export const columns: ColumnDef<User>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Age
-           {column.getIsSorted() && <ArrowUp className="ml-2 h-4 w-4" />}
+           {column.getIsSorted() && <ArrowUp className={`ml-2 h-4 w-4 ${column.getIsSorted() === 'desc' ? 'rotate-180' : ''}`} />}
         </div>
       )
     },
@@ -62,7 +61,7 @@ export const columns: ColumnDef<User>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Role
-           {column.getIsSorted() && <ArrowUp className="ml-2 h-4 w-4" />}
+           {column.getIsSorted() && <ArrowUp className={`ml-2 h-4 w-4 ${column.getIsSorted() === 'desc' ? 'rotate-180' : ''}`} />}
         </div>
       )
     },
@@ -77,7 +76,7 @@ export const columns: ColumnDef<User>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Gender
-           {column.getIsSorted() && <ArrowUp className="ml-2 h-4 w-4" />}
+           {column.getIsSorted() && <ArrowUp className={`ml-2 h-4 w-4 ${column.getIsSorted() === 'desc' ? 'rotate-180' : ''}`} />}
         </div>
       )
     },
@@ -93,7 +92,7 @@ export const columns: ColumnDef<User>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           City
-           {column.getIsSorted() && <ArrowUp className="ml-2 h-4 w-4" />}
+           {column.getIsSorted() && <ArrowUp className={`ml-2 h-4 w-4 ${column.getIsSorted() === 'desc' ? 'rotate-180' : ''}`} />}
         </div>
       )
     },
