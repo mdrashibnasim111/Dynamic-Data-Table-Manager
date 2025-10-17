@@ -29,7 +29,8 @@ export function DataTableRowActions<TData extends User>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const { toast } = useToast()
-  
+  const [isEditDialogOpen, setIsEditDialogOpen] = React.useState(false)
+
   const handleDelete = () => {
     const meta = row.table.options.meta as any
     meta?.removeRow(row.index)
@@ -38,12 +39,26 @@ export function DataTableRowActions<TData extends User>({
       description: "The row has been successfully deleted.",
     })
   }
+
+  const handleSave = (updatedUser: User) => {
+    const meta = row.table.options.meta as any
+    meta?.updateData(row.index, updatedUser)
+    setIsEditDialogOpen(false)
+    toast({
+        title: "Row Saved",
+        description: "The changes to the row have been saved.",
+    })
+  }
   
   return (
     <div className="whitespace-nowrap text-right text-sm font-medium">
+       <Button variant="ghost" size="icon" className="text-primary hover:text-primary/80 ml-2 h-8 w-8" onClick={() => setIsEditDialogOpen(true)}>
+        <Edit className="h-5 w-5" />
+        <span className="sr-only">Edit</span>
+      </Button>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="ghost" size="icon" className="text-red-500 hover:text-red-400 ml-2 h-8 w-8">
+          <Button variant="ghost" size="icon" className="text-red-500 hover:text-red-400 ml-2 h-8 w-8 dark:text-red-400 dark:hover:text-red-300">
             <Trash2 className="h-5 w-5" />
             <span className="sr-only">Delete</span>
           </Button>
@@ -67,6 +82,14 @@ export function DataTableRowActions<TData extends User>({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <EditRow 
+        user={row.original}
+        isOpen={isEditDialogOpen}
+        onSave={handleSave}
+        onCancel={() => setIsEditDialogOpen(false)}
+      />
     </div>
   )
 }
+
