@@ -145,7 +145,7 @@ export function DataTableToolbar<TData>({
                   variant="ghost"
                   size="sm"
                   onClick={handleCancel}
-                  className="btn-clay flex flex-1 items-center justify-center gap-1.5 text-xs font-medium py-2.5 px-3 rounded-lg dark:bg-red-500/20 dark:hover:bg-red-500/30 dark:border-red-500/50"
+                  className="btn-clay flex flex-1 items-center justify-center gap-1.5 text-xs font-medium py-2.5 px-3 rounded-lg bg-red-500/20 hover:bg-red-500/30 border-red-500/50 dark:bg-red-500/20 dark:hover:bg-red-500/30 dark:border-red-500/50"
                 >
                   <XCircle className="h-4 w-4" />
                   <span>Cancel All</span>
