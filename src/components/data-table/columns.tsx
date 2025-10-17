@@ -2,7 +2,7 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUp } from "lucide-react"
+import { ArrowUp, ArrowUpDown, ArrowDown } from "lucide-react"
 import { User } from "@/lib/data"
 import { DataTableRowActions } from "./data-table-row-actions"
 
@@ -16,7 +16,13 @@ export const columns: ColumnDef<User>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Name
-          {column.getIsSorted() && <ArrowUp className={`ml-2 h-4 w-4 ${column.getIsSorted() === 'desc' ? 'rotate-180' : ''}`} />}
+          {column.getIsSorted() === 'desc' ? (
+            <ArrowDown className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'asc' ? (
+            <ArrowUp className="ml-2 h-4 w-4" />
+          ) : (
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          )}
         </div>
       )
     },
@@ -31,7 +37,13 @@ export const columns: ColumnDef<User>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Email
-           {column.getIsSorted() && <ArrowUp className={`ml-2 h-4 w-4 ${column.getIsSorted() === 'desc' ? 'rotate-180' : ''}`} />}
+           {column.getIsSorted() === 'desc' ? (
+            <ArrowDown className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'asc' ? (
+            <ArrowUp className="ml-2 h-4 w-4" />
+          ) : (
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          )}
         </div>
       )
     },
@@ -46,7 +58,13 @@ export const columns: ColumnDef<User>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Age
-           {column.getIsSorted() && <ArrowUp className={`ml-2 h-4 w-4 ${column.getIsSorted() === 'desc' ? 'rotate-180' : ''}`} />}
+           {column.getIsSorted() === 'desc' ? (
+            <ArrowDown className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'asc' ? (
+            <ArrowUp className="ml-2 h-4 w-4" />
+          ) : (
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          )}
         </div>
       )
     },
@@ -61,7 +79,13 @@ export const columns: ColumnDef<User>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Role
-           {column.getIsSorted() && <ArrowUp className={`ml-2 h-4 w-4 ${column.getIsSorted() === 'desc' ? 'rotate-180' : ''}`} />}
+           {column.getIsSorted() === 'desc' ? (
+            <ArrowDown className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'asc' ? (
+            <ArrowUp className="ml-2 h-4" />
+          ) : (
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          )}
         </div>
       )
     },
@@ -76,7 +100,13 @@ export const columns: ColumnDef<User>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Gender
-           {column.getIsSorted() && <ArrowUp className={`ml-2 h-4 w-4 ${column.getIsSorted() === 'desc' ? 'rotate-180' : ''}`} />}
+           {column.getIsSorted() === 'desc' ? (
+            <ArrowDown className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'asc' ? (
+            <ArrowUp className="ml-2 h-4 w-4" />
+          ) : (
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          )}
         </div>
       )
     },
@@ -89,10 +119,16 @@ export const columns: ColumnDef<User>[] = [
       return (
         <div
           className="flex items-center gap-1 cursor-pointer"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          onClick={() => column.toggleSorting(column.getIs_Sorted() === "asc")}
         >
           City
-           {column.getIsSorted() && <ArrowUp className={`ml-2 h-4 w-4 ${column.getIsSorted() === 'desc' ? 'rotate-180' : ''}`} />}
+           {column.getIsSorted() === 'desc' ? (
+            <ArrowDown className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'asc' ? (
+            <ArrowUp className="ml-2 h-4 w-4" />
+          ) : (
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          )}
         </div>
       )
     },
