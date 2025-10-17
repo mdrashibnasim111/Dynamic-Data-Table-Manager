@@ -24,7 +24,7 @@ export default function Home() {
         </div>
       </header>
       
-      <main className="flex-1 flex flex-col px-4 pb-4">
+      <main className="px-4 pb-4">
         <DataTable data={data} />
       </main>
 
