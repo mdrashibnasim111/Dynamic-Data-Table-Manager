@@ -50,6 +50,7 @@ export function DataTable<TData extends User, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [data, setData] = React.useState(defaultData)
   const [originalData, setOriginalData] = React.useState(defaultData)
+  const [isMounted, setIsMounted] = React.useState(false);
 
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
@@ -61,12 +62,16 @@ export function DataTable<TData extends User, TValue>({
   const [globalFilter, setGlobalFilter] = React.useState("")
   const [columns, setColumns] = React.useState<ColumnDef<TData>[]>(() => defaultColumns as ColumnDef<TData>[])
 
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const table = useReactTable({
     data,
     columns,
     state: {
       sorting,
-      columnVisibility,
+      columnVisibility: isMounted ? columnVisibility : {},
       rowSelection,
       columnFilters,
       globalFilter,
