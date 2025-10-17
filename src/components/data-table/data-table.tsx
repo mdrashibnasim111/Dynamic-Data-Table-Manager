@@ -31,13 +31,15 @@ import { DataTableToolbar } from "./data-table-toolbar"
 import { useLocalStorage } from "@/hooks/use-local-storage"
 import { columns as defaultColumns } from "./columns"
 import { User } from "@/lib/data"
+import { useToast } from "@/hooks/use-toast"
 
 declare module '@tanstack/react-table' {
   interface TableMeta<TData extends RowData> {
-    updateData: (rowIndex: number, data: TData) => void
+    updateData: (rowIndex: number, columnId: string, value: any) => void
     removeRow: (rowIndex: number) => void;
     setData: (data: TData[]) => void
     addColumn: (column: ColumnDef<TData>) => void
+    isEditing: boolean
   }
 }
 
@@ -48,9 +50,11 @@ interface DataTableProps<TData extends User, TValue> {
 export function DataTable<TData extends User, TValue>({
   data: defaultData,
 }: DataTableProps<TData, TValue>) {
+  const { toast } = useToast()
   const [data, setData] = React.useState(defaultData)
   const [originalData, setOriginalData] = React.useState(defaultData)
   const [isMounted, setIsMounted] = React.useState(false);
+  const [isEditing, setIsEditing] = React.useState(false)
 
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
@@ -66,6 +70,25 @@ export function DataTable<TData extends User, TValue>({
     setIsMounted(true);
   }, []);
 
+  const handleSave = () => {
+    setOriginalData(data)
+    setIsEditing(false)
+    toast({
+      title: "Changes Saved",
+      description: "All your changes have been saved successfully.",
+    })
+  }
+
+  const handleCancel = () => {
+    setData(originalData)
+    setIsEditing(false)
+    toast({
+      title: "Changes Canceled",
+      description: "All changes have been discarded.",
+      variant: "destructive",
+    })
+  }
+
   const table = useReactTable({
     data,
     columns,
@@ -77,19 +100,15 @@ export function DataTable<TData extends User, TValue>({
       globalFilter,
     },
     meta: {
-      updateData: (rowIndex, updatedRow) => {
+      isEditing,
+      updateData: (rowIndex, columnId, value) => {
         setData(old =>
           old.map((row, index) => {
             if (index === rowIndex) {
-              return updatedRow;
-            }
-            return row
-          })
-        )
-        setOriginalData(old =>
-          old.map((row, index) => {
-            if (index === rowIndex) {
-              return updatedRow;
+              return {
+                ...old[rowIndex]!,
+                [columnId]: value,
+              }
             }
             return row
           })
@@ -129,15 +148,21 @@ export function DataTable<TData extends User, TValue>({
 
   return (
     <div className="flex-1 flex flex-col min-h-0">
-      <DataTableToolbar 
-        table={table}
-        setData={(newData) => {
-          setData(newData)
-          setOriginalData(newData)
-        }}
-      />
-      <div className="flex-1 overflow-x-auto table-clay rounded-lg">
-        <div className="min-w-full">
+      <div className="px-4">
+        <DataTableToolbar 
+          table={table}
+          setData={(newData) => {
+            setData(newData)
+            setOriginalData(newData)
+          }}
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
+          handleSave={handleSave}
+          handleCancel={handleCancel}
+        />
+      </div>
+      <div className="flex-1 px-4 overflow-auto">
+        <div className="table-clay rounded-lg">
           <div className="overflow-hidden rounded-lg">
             <Table className="min-w-full divide-y divide-border">
               <TableHeader className="bg-secondary/70 dark:bg-dark-surface-light backdrop-blur-sm">

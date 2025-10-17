@@ -14,61 +14,49 @@ export const EditableCell = ({
   table,
 }: CellContext<User, unknown>) => {
   const initialValue = getValue() as string | number
-  const [isEditing, setIsEditing] = useState(false)
   const [value, setValue] = useState(initialValue)
   const { toast } = useToast()
 
   const tableMeta = table.options.meta;
+  const isEditing = tableMeta?.isEditing
   
   const onBlur = () => {
-    setIsEditing(false)
-    if (initialValue === value) return
-
-    // Validation
+    // In global edit mode, we don't save on blur. Saving is handled by the main "Save" button.
+    // We still do validation though.
     if (column.id === 'age' && isNaN(Number(value))) {
         toast({
             variant: "destructive",
             title: "Invalid Input",
             description: "Age must be a number."
         })
-        setValue(initialValue)
+        setValue(initialValue) // Revert on invalid input
         return
     }
-    
-    const newRow = {
-      ...row.original,
-      [column.id]: value
-    }
 
-    tableMeta?.updateData?.(row.index, newRow)
-    tableMeta?.setEditedRows?.((old: any) => ({
-      ...old,
-      [row.id]: { ...old[row.id], [column.id]: value }
-    }))
+    if (initialValue !== value) {
+        tableMeta?.updateData?.(row.index, column.id, value)
+    }
   }
 
   useEffect(() => {
     setValue(initialValue)
   }, [initialValue])
-
-  const handleDoubleClick = () => {
-    setIsEditing(true)
+  
+  if (!isEditing) {
+    return (
+      <div className="w-full h-full min-h-[1.5rem] px-3 py-2 -mx-3 -my-2">
+        <span>{value}</span>
+      </div>
+    )
   }
 
-  return isEditing ? (
+  return (
     <Input
       value={value as string}
       onChange={(e) => setValue(e.target.value)}
       onBlur={onBlur}
-      autoFocus
-      className="h-8 text-sm"
+      autoFocus={false}
+      className="h-8 text-sm bg-transparent border-primary/50"
     />
-  ) : (
-    <div
-      onDoubleClick={handleDoubleClick}
-      className="w-full h-full min-h-[1.5rem] px-3 py-2 -mx-3 -my-2"
-    >
-      <span>{value}</span>
-    </div>
   )
 }

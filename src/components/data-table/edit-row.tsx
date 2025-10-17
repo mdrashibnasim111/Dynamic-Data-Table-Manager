@@ -6,16 +6,22 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { User } from '@/lib/data';
+import { X } from 'lucide-react';
 
 interface EditRowProps {
   user: User;
   onSave: (updatedUser: User) => void;
   onCancel: () => void;
+  isOpen: boolean;
 }
 
-export function EditRow({ user, onSave, onCancel }: EditRowProps) {
+export function EditRow({ user, onSave, onCancel, isOpen }: EditRowProps) {
   const [editedUser, setEditedUser] = useState<User>(user);
   const [errors, setErrors] = useState<{ age?: string }>({});
+
+  React.useEffect(() => {
+    setEditedUser(user)
+  }, [user])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -29,107 +35,61 @@ export function EditRow({ user, onSave, onCancel }: EditRowProps) {
     }
     onSave({ ...editedUser, age: Number(editedUser.age) });
   };
+  
+  if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-gradient-to-br from-background-light to-primary/10 dark:from-background-dark dark:to-primary/10 font-display">
-      <div className="flex flex-col justify-between min-h-screen">
-        <div className="flex-grow">
-          <header className="p-4 flex items-center justify-between">
-            <button onClick={onCancel} className="text-gray-800 dark:text-gray-200">
-              <span className="material-symbols-outlined">close</span>
-            </button>
-            <h1 className="text-lg font-bold text-gray-900 dark:text-white flex-grow text-center">Edit Row</h1>
-            <div className="w-10"></div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={onCancel}>
+      <div className="bg-background rounded-xl shadow-lg w-full max-w-md m-4" onClick={(e) => e.stopPropagation()}>
+        <div className="flex flex-col h-full">
+          <header className="p-4 flex items-center justify-between border-b border-border">
+            <h1 className="text-lg font-bold text-foreground">Edit Row</h1>
+            <Button variant="ghost" size="icon" onClick={onCancel} className="text-muted-foreground">
+              <X className="h-5 w-5" />
+            </Button>
           </header>
-          <main className="px-4 py-6">
+          <main className="px-4 py-6 flex-grow overflow-y-auto">
             <form className="space-y-6">
-              <div>
-                <Label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name</Label>
-                <Input
-                  id="name"
-                  name="name"
-                  type="text"
-                  value={editedUser.name}
-                  onChange={handleChange}
-                  className="w-full bg-white/50 dark:bg-black/20 border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-gray-900 dark:text-white"
-                />
-              </div>
-              <div>
-                <Label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={editedUser.email}
-                  onChange={handleChange}
-                  className="w-full bg-white/50 dark:bg-black/20 border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-gray-900 dark:text-white"
-                />
-              </div>
-              <div>
-                <Label htmlFor="age" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Age</Label>
-                <Input
-                  id="age"
-                  name="age"
-                  type="text"
-                  value={editedUser.age}
-                  onChange={handleChange}
-                  className="w-full bg-white/50 dark:bg-black/20 border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-gray-900 dark:text-white"
-                />
-                {errors.age && <p className="mt-2 text-sm text-red-600 dark:text-red-500">{errors.age}</p>}
-              </div>
-              <div>
-                <Label htmlFor="role" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Role</Label>
-                <Input
-                  id="role"
-                  name="role"
-                  type="text"
-                  value={editedUser.role}
-                  onChange={handleChange}
-                  className="w-full bg-white/50 dark:bg-black/20 border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-gray-900 dark:text-white"
-                />
-              </div>
-               <div>
-                <Label htmlFor="gender" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Gender</Label>
-                <Input
-                  id="gender"
-                  name="gender"
-                  type="text"
-                  value={editedUser.gender || ''}
-                  onChange={handleChange}
-                  className="w-full bg-white/50 dark:bg-black/20 border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-gray-900 dark:text-white"
-                />
-              </div>
-               <div>
-                <Label htmlFor="city" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">City</Label>
-                <Input
-                  id="city"
-                  name="city"
-                  type="text"
-                  value={editedUser.city || ''}
-                  onChange={handleChange}
-                  className="w-full bg-white/50 dark:bg-black/20 border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-gray-900 dark:text-white"
-                />
-              </div>
+              {Object.keys(user).map((key) => {
+                if (key === 'id') return null;
+
+                const label = key.charAt(0).toUpperCase() + key.slice(1);
+                
+                return (
+                  <div key={key}>
+                    <Label htmlFor={key} className="block text-sm font-medium text-muted-foreground mb-1">{label}</Label>
+                    <Input
+                      id={key}
+                      name={key}
+                      type={key === 'age' ? 'number' : key === 'email' ? 'email' : 'text'}
+                      value={editedUser[key as keyof User] as string || ''}
+                      onChange={handleChange}
+                      className="input-clay w-full"
+                    />
+                     {key === 'age' && errors.age && <p className="mt-2 text-sm text-red-600 dark:text-red-500">{errors.age}</p>}
+                  </div>
+                )
+              })}
             </form>
           </main>
+          <footer className="p-4 bg-background border-t border-border rounded-b-xl">
+            <div className="flex items-center justify-end space-x-2">
+              <Button
+                variant="outline"
+                onClick={onCancel}
+                className="btn-clay"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleSave}
+                className="btn-clay bg-primary text-primary-foreground hover:bg-primary/90"
+              >
+                Save
+              </Button>
+            </div>
+          </footer>
         </div>
-        <footer className="p-4 bg-background-light dark:bg-background-dark border-t border-gray-200 dark:border-gray-700">
-          <div className="flex items-center justify-end space-x-4">
-            <Button
-              variant="outline"
-              onClick={onCancel}
-              className="px-6 py-3 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-bold text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={handleSave}
-              className="px-8 py-3 border border-transparent rounded-full shadow-sm text-sm font-bold text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-            >
-              Save
-            </Button>
-          </div>
-        </footer>
       </div>
     </div>
   );
