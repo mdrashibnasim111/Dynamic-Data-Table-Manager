@@ -2,16 +2,9 @@
 "use client"
 
 import { Row } from "@tanstack/react-table"
-import { MoreHorizontal } from "lucide-react"
+import { Edit, Trash2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -39,7 +32,6 @@ export function DataTableRowActions<TData extends User>({
   const [isEditing, setIsEditing] = React.useState(false)
 
   const handleDelete = () => {
-    // This is a mock delete. In a real app, you'd call an API.
     const meta = row.table.options.meta as any
     meta?.removeRow(row.index)
     toast({
@@ -60,53 +52,45 @@ export function DataTableRowActions<TData extends User>({
   
   return (
     <>
-    {isEditing && (
-      <EditRow 
-        user={row.original} 
-        onSave={handleSave}
-        onCancel={() => setIsEditing(false)}
-      />
-    )}
-    <AlertDialog>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
-          >
-            <MoreHorizontal className="h-4 w-4" />
-            <span className="sr-only">Open menu</span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-[160px]">
-          <DropdownMenuItem onClick={() => setIsEditing(true)}>Edit</DropdownMenuItem>
-          <DropdownMenuSeparator />
+      {isEditing && (
+        <EditRow 
+          user={row.original} 
+          onSave={handleSave}
+          onCancel={() => setIsEditing(false)}
+        />
+      )}
+      <div className="whitespace-nowrap text-right text-sm font-medium">
+        <Button variant="ghost" size="icon" className="text-primary hover:text-primary/80 h-8 w-8" onClick={() => setIsEditing(true)}>
+          <Edit className="h-4 w-4" />
+          <span className="sr-only">Edit</span>
+        </Button>
+        <AlertDialog>
           <AlertDialogTrigger asChild>
-            <DropdownMenuItem className="text-red-600 dark:text-red-500">
-              Delete
-            </DropdownMenuItem>
+            <Button variant="ghost" size="icon" className="text-red-500 hover:text-red-400 ml-2 h-8 w-8">
+              <Trash2 className="h-4 w-4" />
+              <span className="sr-only">Delete</span>
+            </Button>
           </AlertDialogTrigger>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete this
-            row and remove its data from our servers.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={handleDelete}
-            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-          >
-            Delete
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete this
+                row and remove its data from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleDelete}
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
     </>
   )
 }
