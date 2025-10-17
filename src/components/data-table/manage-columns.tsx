@@ -4,7 +4,6 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Table, ColumnDef } from '@tanstack/react-table';
 import { User } from '@/lib/data';
@@ -18,7 +17,6 @@ interface ManageColumnsProps<TData> {
 
 export function ManageColumns<TData extends User>({ isOpen, onClose, table }: ManageColumnsProps<TData>) {
   const [newFieldName, setNewFieldName] = useState('');
-  const [newFieldType, setNewFieldType] = useState('Text');
 
   const handleAddField = () => {
     if (newFieldName) {
@@ -34,7 +32,6 @@ export function ManageColumns<TData extends User>({ isOpen, onClose, table }: Ma
       (table.options.meta as any)?.addColumn(newColumn);
 
       setNewFieldName('');
-      setNewFieldType('Text');
     }
   };
 
@@ -42,8 +39,8 @@ export function ManageColumns<TData extends User>({ isOpen, onClose, table }: Ma
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col justify-end bg-background/80 backdrop-blur-sm">
-      <div className="flex flex-col items-stretch bg-background rounded-t-xl max-h-[90vh] shadow-dark-soft-hover">
+    <div className="fixed inset-0 z-50 flex flex-col justify-end bg-background/80 backdrop-blur-sm" onClick={onClose}>
+      <div className="flex flex-col items-stretch bg-background rounded-t-xl max-h-[90vh] shadow-dark-soft-hover" onClick={(e) => e.stopPropagation()}>
         <div className="flex justify-center py-3" onClick={onClose}>
           <div className="h-1.5 w-10 rounded-full bg-border/50"></div>
         </div>
@@ -58,21 +55,26 @@ export function ManageColumns<TData extends User>({ isOpen, onClose, table }: Ma
             <h3 className="text-base font-semibold text-foreground">Columns</h3>
           </div>
           <div className="divide-y divide-border/50">
-            {table.getAllColumns().filter(col => col.getCanHide()).map((column) => (
-              <div key={column.id} className="flex items-center gap-4 px-4 py-3 hover:bg-accent/50 transition-colors">
-                <div className="flex items-center justify-center rounded-lg bg-secondary shrink-0 size-10 text-secondary-foreground">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256"><path d="M170.48,115.7A44,44,0,0,0,140,40H72a8,8,0,0,0-8,8V200a8,8,0,0,0,8,8h80a48,48,0,0,0,18.48-92.3ZM80,56h60a28,28,0,0,1,0,56H80Zm72,136H80V128h72a32,32,0,0,1,0,64Z"></path></svg>
-                </div>
-                <div className="flex-1">
-                  <p className="text-foreground font-medium capitalize">{column.id.replace(/_/g, ' ')}</p>
-                  <p className="text-muted-foreground text-sm">Text</p>
-                </div>
-                <Switch
-                  checked={column.getIsVisible()}
-                  onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                />
-              </div>
-            ))}
+            {table.getAllLeafColumns().map((column) => {
+              return (
+                column.getCanHide() && (
+                  <div key={column.id} className="flex items-center gap-4 px-4 py-3 hover:bg-accent/50 transition-colors">
+                    <div className="flex items-center justify-center rounded-lg bg-secondary shrink-0 size-10 text-secondary-foreground">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256"><path d="M170.48,115.7A44,44,0,0,0,140,40H72a8,8,0,0,0-8,8V200a8,8,0,0,0,8,8h80a48,48,0,0,0,18.48-92.3ZM80,56h60a28,28,0,0,1,0,56H80Zm72,136H80V128h72a32,32,0,0,1,0,64Z"></path></svg>
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-foreground font-medium capitalize">{column.id.replace(/_/g, ' ')}</p>
+                      <p className="text-muted-foreground text-sm">Text</p>
+                    </div>
+                    <Switch
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                      aria-label="Toggle column visibility"
+                    />
+                  </div>
+                )
+              )
+            })}
           </div>
         </div>
         <div className="px-4 py-4 bg-background border-t border-border/50">
