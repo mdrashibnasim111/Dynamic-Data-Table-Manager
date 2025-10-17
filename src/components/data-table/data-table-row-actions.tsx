@@ -61,13 +61,13 @@ export function DataTableRowActions<TData extends User>({
       )}
       <div className="whitespace-nowrap text-right text-sm font-medium">
         <Button variant="ghost" size="icon" className="text-primary hover:text-primary/80 h-8 w-8" onClick={() => setIsEditing(true)}>
-          <Edit className="h-4 w-4" />
+          <Edit className="h-5 w-5" />
           <span className="sr-only">Edit</span>
         </Button>
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="ghost" size="icon" className="text-red-500 hover:text-red-400 ml-2 h-8 w-8">
-              <Trash2 className="h-4 w-4" />
+              <Trash2 className="h-5 w-5" />
               <span className="sr-only">Delete</span>
             </Button>
           </AlertDialogTrigger>

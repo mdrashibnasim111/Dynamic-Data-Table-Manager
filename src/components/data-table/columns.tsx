@@ -27,33 +27,33 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => <SortableHeader column={column} title="Name" />,
-    cell: ({ row }) => <div className="font-medium text-base">{row.getValue("name")}</div>,
+    cell: ({ row }) => <div className="font-medium text-sm">{row.getValue("name")}</div>,
   },
   {
     accessorKey: "email",
     header: ({ column }) => <SortableHeader column={column} title="Email" />,
-     cell: ({ row }) => <div className="text-sm">{row.getValue("email")}</div>,
+     cell: ({ row }) => <div className="text-xs">{row.getValue("email")}</div>,
   },
   {
     accessorKey: "age",
     header: ({ column }) => <SortableHeader column={column} title="Age" />,
-    cell: ({ row }) => <div className="text-sm">{row.getValue("age")}</div>,
+    cell: ({ row }) => <div className="text-xs">{row.getValue("age")}</div>,
   },
   {
     accessorKey: "role",
     header: ({ column }) => <SortableHeader column={column} title="Role" />,
-    cell: ({ row }) => <div className="text-sm">{row.getValue("role")}</div>,
+    cell: ({ row }) => <div className="text-xs">{row.getValue("role")}</div>,
   },
   {
     accessorKey: "gender",
     header: ({ column }) => <SortableHeader column={column} title="Gender" />,
-    cell: ({ row }) => <div className="text-sm">{row.getValue("gender")}</div>,
+    cell: ({ row }) => <div className="text-xs">{row.getValue("gender")}</div>,
     enableHiding: true,
   },
   {
     accessorKey: "city",
     header: ({ column }) => <SortableHeader column={column} title="City" />,
-    cell: ({ row }) => <div className="text-sm">{row.getValue("city")}</div>,
+    cell: ({ row }) => <div className="text-xs">{row.getValue("city")}</div>,
     enableHiding: true,
   },
   {

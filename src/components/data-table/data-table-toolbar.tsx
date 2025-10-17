@@ -73,52 +73,52 @@ export function DataTableToolbar<TData>({
 
   return (
     <>
-      <div className="p-4">
-        <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search"
-            value={(table.getState().globalFilter as string) ?? ""}
-            onChange={(event) => table.setGlobalFilter(event.target.value)}
-            className="input-clay w-full rounded-xl py-4 pl-12 pr-6 text-foreground placeholder:text-muted-foreground focus:outline-none"
-          />
-        </div>
+      <div className="relative mb-4">
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <Input
+          placeholder="Search"
+          value={(table.getState().globalFilter as string) ?? ""}
+          onChange={(event) => table.setGlobalFilter(event.target.value)}
+          className="input-clay w-full rounded-xl py-3 pl-12 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+        />
       </div>
-      <div className="px-4 pb-4 flex justify-between items-center gap-2">
-        <Button
-          variant="ghost"
-          onClick={() => setIsManageColumnsOpen(true)}
-          className="btn-clay flex items-center gap-2 text-sm font-medium py-3 px-5 rounded-xl whitespace-nowrap"
-        >
-          <SlidersHorizontal className="h-4 w-4" />
-          <span>Manage Columns</span>
-        </Button>
-        <div className="flex items-center gap-2">
-            <input
-              type="file"
-              ref={fileInputRef}
-              className="hidden"
-              accept=".csv"
-              onChange={handleImport}
-            />
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => fileInputRef.current?.click()}
-               className="btn-clay flex items-center gap-2 text-sm font-medium py-3 px-5 rounded-xl"
-            >
-              <FileUp className="h-4 w-4" />
-              <span>Import</span>
-            </Button>
-            <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={handleExport}
-                className="btn-clay flex items-center gap-2 text-sm font-medium py-3 px-5 rounded-xl"
-            >
-              <FileDown className="h-4 w-4" />
-              <span>Export</span>
-            </Button>
+      <div className="mb-4 rounded-xl border border-border/50 bg-secondary/40 p-2 dark:border-border/50 dark:bg-background/30">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:justify-between">
+          <Button
+            variant="ghost"
+            onClick={() => setIsManageColumnsOpen(true)}
+            className="btn-clay flex-grow sm:flex-grow-0 flex items-center justify-center gap-1.5 text-xs font-medium py-2.5 px-3 rounded-lg whitespace-nowrap"
+          >
+            <SlidersHorizontal className="h-4 w-4" />
+            <span>Manage Columns</span>
+          </Button>
+          <div className="flex flex-grow sm:flex-grow-0 items-center gap-2 w-full sm:w-auto">
+              <input
+                type="file"
+                ref={fileInputRef}
+                className="hidden"
+                accept=".csv"
+                onChange={handleImport}
+              />
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => fileInputRef.current?.click()}
+                 className="btn-clay flex flex-1 items-center justify-center gap-1.5 text-xs font-medium py-2.5 px-3 rounded-lg"
+              >
+                <FileUp className="h-4 w-4" />
+                <span>Import</span>
+              </Button>
+              <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={handleExport}
+                  className="btn-clay flex flex-1 items-center justify-center gap-1.5 text-xs font-medium py-2.5 px-3 rounded-lg"
+              >
+                <FileDown className="h-4 w-4" />
+                <span>Export</span>
+              </Button>
+          </div>
         </div>
       </div>
       <ManageColumns 

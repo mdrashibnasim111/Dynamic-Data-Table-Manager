@@ -128,7 +128,7 @@ export function DataTable<TData extends User, TValue>({
   })
 
   return (
-    <div className="flex-1 flex flex-col">
+    <>
       <DataTableToolbar 
         table={table}
         setData={(newData) => {
@@ -136,16 +136,16 @@ export function DataTable<TData extends User, TValue>({
           setOriginalData(newData)
         }}
       />
-      <div className="flex-1 overflow-x-auto p-4 pt-0">
-        <div className="min-w-full inline-block align-middle table-clay">
-          <div className="overflow-hidden rounded-xl">
+      <div className="flex-1 overflow-x-auto">
+        <div className="table-clay min-w-full">
+          <div className="overflow-hidden rounded-lg">
             <Table className="min-w-full divide-y divide-border">
               <TableHeader className="bg-secondary/70 dark:bg-background/70 backdrop-blur-sm">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id} className="border-border">
                     {headerGroup.headers.map((header) => {
                       return (
-                        <TableHead key={header.id} className="px-6 py-4 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                        <TableHead key={header.id} className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                           {header.isPlaceholder
                             ? null
                             : flexRender(
@@ -158,7 +158,7 @@ export function DataTable<TData extends User, TValue>({
                   </TableRow>
                 ))}
               </TableHeader>
-              <TableBody className="divide-y divide-border">
+              <TableBody className="divide-y divide-border/50 bg-white/50 dark:bg-background/50 backdrop-blur-sm">
                 {table.getRowModel().rows?.length ? (
                   table.getRowModel().rows.map((row) => (
                     <TableRow
@@ -167,7 +167,7 @@ export function DataTable<TData extends User, TValue>({
                       className="hover:bg-accent/50"
                     >
                       {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id} className="px-6 py-4 whitespace-nowrap">
+                        <TableCell key={cell.id} className="px-4 py-3 whitespace-nowrap">
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext()
@@ -192,6 +192,6 @@ export function DataTable<TData extends User, TValue>({
         </div>
       </div>
       <DataTablePagination table={table} />
-    </div>
+    </>
   )
 }
