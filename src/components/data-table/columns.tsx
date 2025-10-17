@@ -5,6 +5,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUp, ArrowDown, ArrowUpDown } from "lucide-react"
 import { User } from "@/lib/data"
 import { DataTableRowActions } from "./data-table-row-actions"
+import { EditableCell } from "./editable-cell"
 
 const SortableHeader = ({ column, title }: { column: any, title: string }) => (
   <div
@@ -27,33 +28,33 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => <SortableHeader column={column} title="Name" />,
-    cell: ({ row }) => <div className="font-medium text-sm">{row.getValue("name")}</div>,
+    cell: EditableCell,
   },
   {
     accessorKey: "email",
     header: ({ column }) => <SortableHeader column={column} title="Email" />,
-     cell: ({ row }) => <div className="text-xs">{row.getValue("email")}</div>,
+    cell: EditableCell,
   },
   {
     accessorKey: "age",
     header: ({ column }) => <SortableHeader column={column} title="Age" />,
-    cell: ({ row }) => <div className="text-xs">{row.getValue("age")}</div>,
+    cell: EditableCell,
   },
   {
     accessorKey: "role",
     header: ({ column }) => <SortableHeader column={column} title="Role" />,
-    cell: ({ row }) => <div className="text-xs">{row.getValue("role")}</div>,
+    cell: EditableCell,
   },
   {
     accessorKey: "gender",
     header: ({ column }) => <SortableHeader column={column} title="Gender" />,
-    cell: ({ row }) => <div className="text-xs">{row.getValue("gender")}</div>,
+    cell: EditableCell,
     enableHiding: true,
   },
   {
     accessorKey: "city",
     header: ({ column }) => <SortableHeader column={column} title="City" />,
-    cell: ({ row }) => <div className="text-xs">{row.getValue("city")}</div>,
+    cell: EditableCell,
     enableHiding: true,
   },
   {
