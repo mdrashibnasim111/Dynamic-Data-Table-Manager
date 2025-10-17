@@ -159,9 +159,8 @@ export function DataTable<TData extends User, TValue>({
           handleSave={handleSave}
           handleCancel={handleCancel}
         />
-      <div className="flex-1 overflow-x-auto table-clay rounded-lg">
-        <div className="min-w-full">
-          <div className="overflow-hidden">
+      <div className="overflow-x-auto table-clay rounded-lg">
+        <div className="min-w-full inline-block align-middle">
             <Table className="min-w-[720px]">
               <TableHeader className="bg-secondary/70 dark:bg-dark-surface-light backdrop-blur-sm">
                 {table.getHeaderGroups().map((headerGroup) => (
@@ -211,7 +210,6 @@ export function DataTable<TData extends User, TValue>({
                 )}
               </TableBody>
             </Table>
-          </div>
         </div>
       </div>
       <DataTablePagination table={table} />
