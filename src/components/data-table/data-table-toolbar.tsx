@@ -136,7 +136,7 @@ export function DataTableToolbar<TData>({
                   variant="ghost"
                   size="sm"
                   onClick={handleSave}
-                  className="btn-clay flex flex-1 items-center justify-center gap-1.5 text-xs font-medium py-2.5 px-3 rounded-lg dark:bg-green-500/20 dark:hover:bg-green-500/30 dark:border-green-500/50"
+                  className="btn-clay flex flex-1 items-center justify-center gap-1.5 text-xs font-medium py-2.5 px-3 rounded-lg bg-green-500/20 hover:bg-green-500/30 border-green-500/50 dark:bg-green-500/20 dark:hover:bg-green-500/30 dark:border-green-500/50"
                 >
                   <Save className="h-4 w-4" />
                   <span>Save All</span>
