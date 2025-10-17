@@ -1,3 +1,4 @@
+
 "use client"
 
 import { Row } from "@tanstack/react-table"
@@ -23,15 +24,19 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { useToast } from "@/hooks/use-toast"
+import React from "react"
+import { User } from "@/lib/data"
+import { EditRow } from "./edit-row"
 
-interface DataTableRowActionsProps<TData> {
+interface DataTableRowActionsProps<TData extends User> {
   row: Row<TData>
 }
 
-export function DataTableRowActions<TData>({
+export function DataTableRowActions<TData extends User>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const { toast } = useToast()
+  const [isEditing, setIsEditing] = React.useState(false)
 
   const handleDelete = () => {
     // This is a mock delete. In a real app, you'd call an API.
@@ -42,8 +47,26 @@ export function DataTableRowActions<TData>({
       description: "The row has been successfully deleted.",
     })
   }
+
+  const handleSave = (updatedUser: User) => {
+    const meta = row.table.options.meta as any
+    meta?.updateData(row.index, updatedUser)
+    setIsEditing(false)
+    toast({
+      title: "Row Updated",
+      description: "The row has been successfully updated.",
+    })
+  }
   
   return (
+    <>
+    {isEditing && (
+      <EditRow 
+        user={row.original} 
+        onSave={handleSave}
+        onCancel={() => setIsEditing(false)}
+      />
+    )}
     <AlertDialog>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -56,7 +79,7 @@ export function DataTableRowActions<TData>({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
-          <DropdownMenuItem>Edit</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setIsEditing(true)}>Edit</DropdownMenuItem>
           <DropdownMenuSeparator />
           <AlertDialogTrigger asChild>
             <DropdownMenuItem className="text-red-600 dark:text-red-500">
@@ -84,5 +107,6 @@ export function DataTableRowActions<TData>({
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
+    </>
   )
 }

@@ -1,3 +1,4 @@
+
 "use client"
 
 import React, { useEffect, useState } from 'react'
@@ -17,7 +18,7 @@ export const EditableCell = ({
   const [value, setValue] = useState(initialValue)
   const { toast } = useToast()
 
-  const { updateData, editedRows, setEditedRows } = table.options.meta || {}
+  const tableMeta = table.options.meta;
   
   const onBlur = () => {
     setIsEditing(false)
@@ -33,14 +34,17 @@ export const EditableCell = ({
         setValue(initialValue)
         return
     }
-
-    if (updateData && setEditedRows) {
-        updateData(row.index, column.id, value)
-        setEditedRows({
-            ...editedRows,
-            [row.id]: { ...editedRows?.[row.id], [column.id]: value }
-        })
+    
+    const newRow = {
+      ...row.original,
+      [column.id]: value
     }
+
+    tableMeta?.updateData?.(row.index, newRow)
+    tableMeta?.setEditedRows?.((old: any) => ({
+      ...old,
+      [row.id]: { ...old[row.id], [column.id]: value }
+    }))
   }
 
   useEffect(() => {

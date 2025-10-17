@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -35,7 +36,7 @@ declare module '@tanstack/react-table' {
   interface TableMeta<TData extends RowData> {
     editedRows: any
     setEditedRows: React.Dispatch<React.SetStateAction<any>>
-    updateData: (rowIndex: number, columnId: string, value: any) => void
+    updateData: (rowIndex: number, data: TData) => void
     removeRow: (rowIndex: number) => void;
     setData: (data: TData[]) => void
     updateEditedRows: () => void
@@ -76,14 +77,11 @@ export function DataTable<TData extends User, TValue>({
     meta: {
       editedRows,
       setEditedRows,
-      updateData: (rowIndex, columnId, value) => {
+      updateData: (rowIndex, updatedRow) => {
         setData(old =>
           old.map((row, index) => {
             if (index === rowIndex) {
-              return {
-                ...old[rowIndex]!,
-                [columnId]: value,
-              }
+              return updatedRow;
             }
             return row
           })
