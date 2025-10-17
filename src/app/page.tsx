@@ -1,3 +1,4 @@
+
 'use client';
 
 import { DataTable } from '@/components/data-table/data-table';
@@ -23,7 +24,7 @@ export default function Home() {
         </div>
       </header>
       
-      <main className="flex-1 flex flex-col">
+      <main className="flex-1 flex flex-col px-4">
         <DataTable data={data} />
       </main>
 
