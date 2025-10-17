@@ -10,12 +10,15 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        display: ['Inter', 'sans-serif'],
         body: ['Inter', 'sans-serif'],
         headline: ['Inter', 'sans-serif'],
         code: ['monospace'],
       },
       colors: {
         background: 'hsl(var(--background))',
+        "background-light": "#f6f7f8",
+        "background-dark": "#101922",
         foreground: 'hsl(var(--foreground))',
         card: {
           DEFAULT: 'hsl(var(--card))',
@@ -67,9 +70,10 @@ export default {
         },
       },
       borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+        DEFAULT: "0.25rem",
+        lg: "0.5rem",
+        xl: "0.75rem",
+        full: "9999px"
       },
       keyframes: {
         'accordion-down': {

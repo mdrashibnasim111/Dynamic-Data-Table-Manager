@@ -102,15 +102,18 @@ export function DataTableToolbar<TData>({
   return (
     <div className="flex items-center justify-between py-4">
       <div className="flex items-center gap-2 flex-1">
-        <Input
-          placeholder="Search all columns..."
-          value={(table.getState().globalFilter as string) ?? ""}
-          onChange={(event) => table.setGlobalFilter(event.target.value)}
-          className="h-9 max-w-sm"
-        />
+        <div className="relative w-full max-w-sm">
+          <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500">search</span>
+          <Input
+            placeholder="Search"
+            value={(table.getState().globalFilter as string) ?? ""}
+            onChange={(event) => table.setGlobalFilter(event.target.value)}
+            className="w-full rounded-lg bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 py-3 pl-10 pr-4 text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
         {hasEdits && (
             <>
-                <Button onClick={handleSave} size="sm" variant="secondary" className="bg-accent text-accent-foreground hover:bg-accent/90">
+                <Button onClick={handleSave} size="sm" variant="secondary" className="bg-primary text-white">
                     <Save className="mr-2 h-4 w-4" /> Save All
                 </Button>
                 <Button onClick={handleCancel} size="sm" variant="ghost">
