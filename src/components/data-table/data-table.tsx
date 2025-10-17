@@ -147,7 +147,7 @@ export function DataTable<TData extends User, TValue>({
   })
 
   return (
-    <div className="flex flex-col min-h-0 space-y-4">
+    <div className="flex flex-col min-h-0 space-y-4 flex-1">
         <DataTableToolbar 
           table={table}
           setData={(newData) => {
@@ -159,7 +159,7 @@ export function DataTable<TData extends User, TValue>({
           handleSave={handleSave}
           handleCancel={handleCancel}
         />
-      <div className="overflow-x-auto table-clay rounded-lg">
+      <div className="flex-1 overflow-x-auto table-clay rounded-lg">
         <div className="min-w-full">
           <div className="overflow-hidden">
             <Table className="min-w-[720px]">
