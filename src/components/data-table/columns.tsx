@@ -1,3 +1,4 @@
+
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
@@ -90,6 +91,38 @@ export const columns: ColumnDef<User>[] = [
       )
     },
     cell: EditableCell,
+  },
+  {
+    accessorKey: "gender",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Gender
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+    cell: EditableCell,
+    enableHiding: true,
+  },
+  {
+    accessorKey: "city",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          City
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+    cell: EditableCell,
+    enableHiding: true,
   },
   {
     id: "actions",

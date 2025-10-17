@@ -1,14 +1,15 @@
+
 "use client"
 
 import { Table } from "@tanstack/react-table"
-import { FileDown, FileUp, Save, XCircle } from "lucide-react"
+import { FileDown, FileUp, Save, SlidersHorizontal, XCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { DataTableViewOptions } from "./data-table-view-options"
 import { useToast } from "@/hooks/use-toast"
 import Papa from "papaparse"
 import { saveAs } from "file-saver"
 import React from "react"
+import { ManageColumns } from "./manage-columns"
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -16,6 +17,7 @@ interface DataTableToolbarProps<TData> {
   setEditedRows: (editedRows: any) => void
   revertData: () => void
   updateData: (data: TData[]) => void
+  setData: (data: TData[]) => void
 }
 
 export function DataTableToolbar<TData>({
@@ -23,10 +25,12 @@ export function DataTableToolbar<TData>({
   editedRows,
   setEditedRows,
   revertData,
-  updateData
+  updateData,
+  setData
 }: DataTableToolbarProps<TData>) {
   const { toast } = useToast()
   const fileInputRef = React.useRef<HTMLInputElement>(null)
+  const [isManageColumnsOpen, setIsManageColumnsOpen] = React.useState(false)
 
   const handleImport = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -35,7 +39,6 @@ export function DataTableToolbar<TData>({
         header: true,
         skipEmptyLines: true,
         complete: (results) => {
-          // In a real app, you'd want to validate this data with something like Zod
           const meta = table.options.meta as any
           meta?.setData(results.data as TData[])
           toast({
@@ -100,6 +103,7 @@ export function DataTableToolbar<TData>({
   const hasEdits = Object.keys(editedRows).length > 0;
 
   return (
+    <>
     <div className="flex items-center justify-between py-4">
       <div className="flex items-center gap-2 flex-1">
         <div className="relative w-full max-w-sm">
@@ -140,8 +144,23 @@ export function DataTableToolbar<TData>({
         <Button variant="outline" size="sm" onClick={handleExport}>
           <FileDown className="mr-2 h-4 w-4" /> Export
         </Button>
-        <DataTableViewOptions table={table} />
+        <Button
+          variant="outline"
+          size="sm"
+          className="ml-auto hidden lg:flex"
+          onClick={() => setIsManageColumnsOpen(true)}
+        >
+          <SlidersHorizontal className="mr-2 h-4 w-4" />
+          Manage Columns
+        </Button>
       </div>
     </div>
+    <ManageColumns 
+      isOpen={isManageColumnsOpen} 
+      onClose={() => setIsManageColumnsOpen(false)}
+      table={table}
+      setData={setData}
+    />
+    </>
   )
 }

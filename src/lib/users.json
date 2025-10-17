@@ -1,107 +1,138 @@
+
 [
   {
     "id": "1",
     "name": "Alice Johnson",
     "email": "alice.j@example.com",
     "age": 28,
-    "role": "Developer"
+    "role": "Developer",
+    "gender": "Female",
+    "city": "New York"
   },
   {
     "id": "2",
     "name": "Bob Williams",
     "email": "bob.w@example.com",
     "age": 34,
-    "role": "Designer"
+    "role": "Designer",
+    "gender": "Male",
+    "city": "San Francisco"
   },
   {
     "id": "3",
     "name": "Charlie Brown",
     "email": "charlie.b@example.com",
     "age": 45,
-    "role": "Manager"
+    "role": "Manager",
+    "gender": "Male",
+    "city": "Chicago"
   },
   {
     "id": "4",
     "name": "Diana Prince",
     "email": "diana.p@example.com",
     "age": 25,
-    "role": "Developer"
+    "role": "Developer",
+    "gender": "Female",
+    "city": "Los Angeles"
   },
   {
     "id": "5",
     "name": "Ethan Hunt",
     "email": "ethan.h@example.com",
     "age": 38,
-    "role": "QA Engineer"
+    "role": "QA Engineer",
+    "gender": "Male",
+    "city": "Miami"
   },
   {
     "id": "6",
     "name": "Fiona Glenanne",
     "email": "fiona.g@example.com",
     "age": 31,
-    "role": "Designer"
+    "role": "Designer",
+    "gender": "Female",
+    "city": "Boston"
   },
   {
     "id": "7",
     "name": "George Costanza",
     "email": "george.c@example.com",
     "age": 42,
-    "role": "Product Owner"
+    "role": "Product Owner",
+    "gender": "Male",
+    "city": "New York"
   },
   {
     "id": "8",
     "name": "Hannah Abbott",
     "email": "hannah.a@example.com",
     "age": 29,
-    "role": "Developer"
+    "role": "Developer",
+    "gender": "Female",
+    "city": "Seattle"
   },
   {
     "id": "9",
     "name": "Ian Malcolm",
     "email": "ian.m@example.com",
     "age": 52,
-    "role": "Architect"
+    "role": "Architect",
+    "gender": "Male",
+    "city": "Austin"
   },
   {
     "id": "10",
     "name": "Jane Doe",
     "email": "jane.d@example.com",
     "age": 30,
-    "role": "Manager"
+    "role": "Manager",
+    "gender": "Female",
+    "city": "Denver"
   },
   {
     "id": "11",
     "name": "Kevin McCallister",
     "email": "kevin.m@example.com",
     "age": 22,
-    "role": "Intern"
+    "role": "Intern",
+    "gender": "Male",
+    "city": "Chicago"
   },
   {
     "id": "12",
     "name": "Laura Palmer",
     "email": "laura.p@example.com",
     "age": 26,
-    "role": "QA Engineer"
+    "role": "QA Engineer",
+    "gender": "Female",
+    "city": "Twin Peaks"
   },
   {
     "id": "13",
     "name": "Michael Scott",
     "email": "michael.s@example.com",
     "age": 40,
-    "role": "Regional Manager"
+    "role": "Regional Manager",
+    "gender": "Male",
+    "city": "Scranton"
   },
   {
     "id": "14",
     "name": "Nancy Wheeler",
     "email": "nancy.w@example.com",
     "age": 23,
-    "role": "Developer"
+    "role": "Developer",
+    "gender": "Female",
+    "city": "Hawkins"
   },
   {
     "id": "15",
     "name": "Oscar Martinez",
     "email": "oscar.m@example.com",
     "age": 39,
-    "role": "Accountant"
+    "role": "Accountant",
+    "gender": "Male",
+    "city": "Scranton"
   }
 ]

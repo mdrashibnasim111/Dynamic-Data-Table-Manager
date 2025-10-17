@@ -31,7 +31,7 @@ export function EditRow({ user, onSave, onCancel }: EditRowProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-gradient-to-br from-background to-sky-100 dark:from-background-dark dark:to-primary/10 font-display">
+    <div className="fixed inset-0 z-50 bg-gradient-to-br from-background-light to-primary/10 dark:from-background-dark dark:to-primary/10 font-display">
       <div className="flex flex-col justify-between min-h-screen">
         <div className="flex-grow">
           <header className="p-4 flex items-center justify-between">
@@ -50,6 +50,17 @@ export function EditRow({ user, onSave, onCancel }: EditRowProps) {
                   name="name"
                   type="text"
                   value={editedUser.name}
+                  onChange={handleChange}
+                  className="w-full bg-white/50 dark:bg-black/20 border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-gray-900 dark:text-white"
+                />
+              </div>
+              <div>
+                <Label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={editedUser.email}
                   onChange={handleChange}
                   className="w-full bg-white/50 dark:bg-black/20 border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-gray-900 dark:text-white"
                 />
@@ -77,13 +88,24 @@ export function EditRow({ user, onSave, onCancel }: EditRowProps) {
                   className="w-full bg-white/50 dark:bg-black/20 border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-gray-900 dark:text-white"
                 />
               </div>
-              <div>
-                <Label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</Label>
+               <div>
+                <Label htmlFor="gender" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Gender</Label>
                 <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={editedUser.email}
+                  id="gender"
+                  name="gender"
+                  type="text"
+                  value={editedUser.gender || ''}
+                  onChange={handleChange}
+                  className="w-full bg-white/50 dark:bg-black/20 border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-gray-900 dark:text-white"
+                />
+              </div>
+               <div>
+                <Label htmlFor="city" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">City</Label>
+                <Input
+                  id="city"
+                  name="city"
+                  type="text"
+                  value={editedUser.city || ''}
                   onChange={handleChange}
                   className="w-full bg-white/50 dark:bg-black/20 border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-gray-900 dark:text-white"
                 />

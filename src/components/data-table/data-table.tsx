@@ -15,7 +15,8 @@ import {
   useReactTable,
   RowData,
   getFacetedRowModel,
-  getFacetedUniqueValues
+  getFacetedUniqueValues,
+  Column
 } from "@tanstack/react-table"
 
 import {
@@ -31,6 +32,7 @@ import { DataTableToolbar } from "./data-table-toolbar"
 import { useLocalStorage } from "@/hooks/use-local-storage"
 import { columns as defaultColumns } from "./columns"
 import { User } from "@/lib/data"
+import { EditableCell } from "./editable-cell"
 
 declare module '@tanstack/react-table' {
   interface TableMeta<TData extends RowData> {
@@ -40,10 +42,11 @@ declare module '@tanstack/react-table' {
     removeRow: (rowIndex: number) => void;
     setData: (data: TData[]) => void
     updateEditedRows: () => void
+    addColumn: (column: ColumnDef<TData>) => void
   }
 }
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData extends User, TValue> {
   data: TData[]
 }
 
@@ -62,7 +65,11 @@ export function DataTable<TData extends User, TValue>({
   )
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [globalFilter, setGlobalFilter] = React.useState("")
-  const [columns] = React.useState<ColumnDef<TData>[]>(() => defaultColumns as ColumnDef<TData>[])
+  const [columns, setColumns] = React.useState<ColumnDef<TData>[]>(() => defaultColumns as ColumnDef<TData>[])
+
+  const addColumn = (newColumn: ColumnDef<TData>) => {
+    setColumns(prev => [...prev, newColumn])
+  }
 
   const table = useReactTable({
     data,
@@ -100,6 +107,13 @@ export function DataTable<TData extends User, TValue>({
       updateEditedRows: () => {
         setOriginalData(data)
         setEditedRows({})
+      },
+      addColumn: (newColumnDef: ColumnDef<TData>) => {
+        const newColumn: ColumnDef<TData> = {
+          ...newColumnDef,
+          cell: EditableCell,
+        };
+        setColumns(prev => [...prev.slice(0, -1), newColumn, prev.slice(-1)[0]])
       }
     },
     onRowSelectionChange: setRowSelection,
@@ -130,6 +144,10 @@ export function DataTable<TData extends User, TValue>({
         updateData={(newData) => {
             setData(newData)
             setOriginalData(newData)
+        }}
+        setData={(newData) => {
+          setData(newData)
+          setOriginalData(newData)
         }}
       />
       <div className="rounded-md border">
