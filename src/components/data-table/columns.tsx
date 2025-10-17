@@ -6,6 +6,7 @@ import { ArrowUp, ArrowDown, ArrowUpDown } from "lucide-react"
 import { User } from "@/lib/data"
 import { DataTableRowActions } from "./data-table-row-actions"
 import { EditableCell } from "./editable-cell"
+import { Checkbox } from "@/components/ui/checkbox"
 
 const SortableHeader = ({ column, title }: { column: any, title: string }) => (
   <div
@@ -25,6 +26,28 @@ const SortableHeader = ({ column, title }: { column: any, title: string }) => (
 
 
 export const columns: ColumnDef<User>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
   {
     accessorKey: "name",
     header: ({ column }) => <SortableHeader column={column} title="Name" />,
