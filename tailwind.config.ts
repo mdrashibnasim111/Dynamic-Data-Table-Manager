@@ -66,6 +66,13 @@ export default {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))',
         },
+         "dark-bg-start": "#2D201D",
+          "dark-bg-end": "#4C332D",
+          "dark-text-primary": "#E0C8C1",
+          "dark-text-secondary": "#A1887F",
+          "dark-surface": "#4E342E",
+          "dark-surface-light": "rgba(78, 52, 46, 0.7)",
+          "dark-border": "#5D4037"
       },
       borderRadius: {
         DEFAULT: "1.5rem",
@@ -77,6 +84,8 @@ export default {
         "soft": "0px 8px 15px rgba(0, 0, 0, 0.1), 0px 4px 6px rgba(0, 0, 0, 0.05)",
         "soft-hover": "0px 10px 20px rgba(0, 0, 0, 0.15), 0px 5px 10px rgba(0, 0, 0, 0.08)",
         "inner-sm": "inset 0px 2px 4px rgba(0, 0, 0, 0.05)",
+        "dark-soft": "0px 8px 20px rgba(0, 0, 0, 0.3), 0px 4px 8px rgba(0, 0, 0, 0.25)",
+        "dark-soft-hover": "0px 12px 25px rgba(0, 0, 0, 0.4), 0px 6px 12px rgba(0, 0, 0, 0.3)"
       },
       transitionTimingFunction: {
         'soft-bounce': 'cubic-bezier(0.175, 0.885, 0.32, 1.275)',

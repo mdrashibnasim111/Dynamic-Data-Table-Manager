@@ -43,24 +43,24 @@ body {
     --radius: 1.5rem;
   }
   .dark {
-    --background: 20 28% 18%; /* #3E2723 */
-    --foreground: 20 43% 87%; /* #FBE9E7 */
-    --card: 20 28% 18%;
-    --card-foreground: 20 43% 87%;
-    --popover: 20 28% 18%;
-    --popover-foreground: 20 43% 87%;
+    --background: 13 22% 14%; /* #2D201D */
+    --foreground: 13 22% 88%; /* #E0C8C1 */
+    --card: 13 22% 14%;
+    --card-foreground: 13 22% 88%;
+    --popover: 13 22% 14%;
+    --popover-foreground: 13 22% 88%;
     --primary: 16 100% 63%;
-    --primary-foreground: 20 28% 18%;
-    --secondary: 30 28% 34%; /* #795548 */
-    --secondary-foreground: 20 43% 87%;
-    --muted: 30 28% 34%;
-    --muted-foreground: 20 28% 59%;
-    --accent: 20 33% 45%; /* A slightly darker accent for dark mode */
-    --accent-foreground: 20 43% 87%;
+    --primary-foreground: 13 22% 88%;
+    --secondary: 13 21% 24%; /* #4E342E */
+    --secondary-foreground: 13 22% 88%;
+    --muted: 13 21% 24%;
+    --muted-foreground: 14 11% 58%; /* #A1887F */
+    --accent: 14 18% 34%; /* #6D4C41 */
+    --accent-foreground: 13 22% 88%;
     --destructive: 0 63% 31%;
-    --destructive-foreground: 20 43% 87%;
-    --border: 30 28% 34%;
-    --input: 30 28% 34%;
+    --destructive-foreground: 13 22% 88%;
+    --border: 14 17% 31%; /* #5D4037 */
+    --input: 14 17% 31%;
     --ring: 16 100% 63%;
   }
 }
@@ -78,18 +78,22 @@ body {
 @layer components {
   .btn-clay {
     @apply bg-secondary text-secondary-foreground shadow-soft transition-all duration-200 ease-soft-bounce hover:bg-accent hover:shadow-soft-hover hover:-translate-y-0.5 active:translate-y-px active:scale-[0.98] active:shadow-sm;
+    @apply dark:bg-border dark:text-foreground dark:shadow-dark-soft dark:hover:bg-accent dark:hover:shadow-dark-soft-hover;
   }
   
   .input-clay {
       @apply bg-secondary border border-border shadow-inner-sm transition-all duration-200 ease-in-out focus:border-primary focus:shadow-[0_0_0_3px_rgba(255,112,67,0.3)];
+      @apply dark:bg-secondary dark:border-border dark:focus:shadow-[0_0_0_3px_rgba(255,112,67,0.2)];
   }
 
   .table-clay {
     @apply bg-white/60 dark:bg-background/60 backdrop-blur-sm rounded-xl shadow-soft;
+    @apply dark:bg-dark-surface-light dark:shadow-dark-soft;
   }
 
   .pagination-btn-clay {
     @apply bg-secondary border border-border text-secondary-foreground shadow-[0_3px_6px_rgba(0,0,0,0.08)] transition-all duration-200 ease-soft-bounce hover:enabled:bg-accent hover:enabled:-translate-y-px hover:enabled:shadow-[0_4px_8px_rgba(0,0,0,0.12)] active:enabled:translate-y-px active:enabled:scale-[0.98] active:enabled:shadow-[0_2px_4px_rgba(0,0,0,0.05)] disabled:bg-background disabled:text-muted-foreground disabled:cursor-not-allowed disabled:shadow-none;
+    @apply dark:bg-border dark:border-accent dark:text-foreground dark:shadow-dark-soft dark:hover:enabled:bg-accent dark:disabled:bg-secondary dark:disabled:text-muted-foreground;
   }
 
   .sort-icon {
