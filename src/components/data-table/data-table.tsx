@@ -138,7 +138,7 @@ export function DataTable<TData extends User, TValue>({
       />
       <div className="flex-1 overflow-x-auto table-clay rounded-lg">
         <div className="min-w-full">
-          <div className="overflow-hidden">
+          <div className="overflow-hidden rounded-lg">
             <Table className="min-w-full divide-y divide-border">
               <TableHeader className="bg-secondary/70 dark:bg-dark-surface-light backdrop-blur-sm">
                 {table.getHeaderGroups().map((headerGroup) => (
