@@ -129,16 +129,16 @@ export function DataTable<TData extends User, TValue>({
 
   return (
     <div className="flex-1 flex flex-col min-h-0">
-        <DataTableToolbar 
-          table={table}
-          setData={(newData) => {
-            setData(newData)
-            setOriginalData(newData)
-          }}
-        />
-      <div className="flex-1 overflow-auto">
-        <div className="table-clay min-w-full">
-          <div className="overflow-hidden rounded-lg">
+      <DataTableToolbar 
+        table={table}
+        setData={(newData) => {
+          setData(newData)
+          setOriginalData(newData)
+        }}
+      />
+      <div className="flex-1 overflow-x-auto table-clay rounded-lg">
+        <div className="min-w-full">
+          <div className="overflow-hidden">
             <Table className="min-w-full divide-y divide-border">
               <TableHeader className="bg-secondary/70 dark:bg-dark-surface-light backdrop-blur-sm">
                 {table.getHeaderGroups().map((headerGroup) => (
