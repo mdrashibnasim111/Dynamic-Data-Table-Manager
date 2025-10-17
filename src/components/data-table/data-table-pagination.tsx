@@ -12,17 +12,17 @@ export function DataTablePagination<TData>({
   table,
 }: DataTablePaginationProps<TData>) {
   return (
-    <div className="px-4 py-3 flex items-center justify-between border-t border-slate-200 dark:border-slate-700 mt-auto">
-      <div className="text-sm text-slate-600 dark:text-slate-400">
+    <div className="px-4 py-6 flex items-center justify-between border-t border-border mt-auto">
+      <div className="text-sm text-foreground">
         Page <span className="font-medium">{table.getState().pagination.pageIndex + 1}</span> of <span className="font-medium">{table.getPageCount()}</span>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         <Button
           variant="outline"
           size="sm"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
-          className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700"
+          className="pagination-btn-clay inline-flex items-center justify-center rounded-xl text-sm font-medium h-10 px-4"
         >
           Previous
         </Button>
@@ -31,7 +31,7 @@ export function DataTablePagination<TData>({
           size="sm"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
-          className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700"
+          className="pagination-btn-clay inline-flex items-center justify-center rounded-xl text-sm font-medium h-10 px-4"
         >
           Next
         </Button>

@@ -2,137 +2,58 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUp, ArrowUpDown, ArrowDown } from "lucide-react"
+import { ArrowUp, ArrowDown, ArrowUpDown } from "lucide-react"
 import { User } from "@/lib/data"
 import { DataTableRowActions } from "./data-table-row-actions"
+
+const SortableHeader = ({ column, title }: { column: any, title: string }) => (
+  <div
+    className="flex items-center gap-1 cursor-pointer"
+    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  >
+    {title}
+    {column.getIsSorted() === 'desc' ? (
+      <ArrowDown className="ml-2 h-4 w-4" />
+    ) : column.getIsSorted() === 'asc' ? (
+      <ArrowUp className="ml-2 h-4 w-4" />
+    ) : (
+      <ArrowUpDown className="ml-2 h-4 w-4 sort-icon" />
+    )}
+  </div>
+);
+
 
 export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "name",
-    header: ({ column }) => {
-      return (
-        <div
-          className="flex items-center gap-1 cursor-pointer"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Name
-          {column.getIsSorted() === 'desc' ? (
-            <ArrowDown className="ml-2 h-4 w-4" />
-          ) : column.getIsSorted() === 'asc' ? (
-            <ArrowUp className="ml-2 h-4 w-4" />
-          ) : (
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          )}
-        </div>
-      )
-    },
-    cell: ({ row }) => <div className="font-medium">{row.getValue("name")}</div>,
+    header: ({ column }) => <SortableHeader column={column} title="Name" />,
+    cell: ({ row }) => <div className="font-medium text-base">{row.getValue("name")}</div>,
   },
   {
     accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <div
-          className="flex items-center gap-1 cursor-pointer"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-           {column.getIsSorted() === 'desc' ? (
-            <ArrowDown className="ml-2 h-4 w-4" />
-          ) : column.getIsSorted() === 'asc' ? (
-            <ArrowUp className="ml-2 h-4 w-4" />
-          ) : (
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          )}
-        </div>
-      )
-    },
-     cell: ({ row }) => <div className="text-slate-600 dark:text-slate-300">{row.getValue("email")}</div>,
+    header: ({ column }) => <SortableHeader column={column} title="Email" />,
+     cell: ({ row }) => <div className="text-sm">{row.getValue("email")}</div>,
   },
   {
     accessorKey: "age",
-    header: ({ column }) => {
-      return (
-        <div
-          className="flex items-center gap-1 cursor-pointer"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Age
-           {column.getIsSorted() === 'desc' ? (
-            <ArrowDown className="ml-2 h-4 w-4" />
-          ) : column.getIsSorted() === 'asc' ? (
-            <ArrowUp className="ml-2 h-4 w-4" />
-          ) : (
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          )}
-        </div>
-      )
-    },
-    cell: ({ row }) => <div className="text-slate-600 dark:text-slate-300">{row.getValue("age")}</div>,
+    header: ({ column }) => <SortableHeader column={column} title="Age" />,
+    cell: ({ row }) => <div className="text-sm">{row.getValue("age")}</div>,
   },
   {
     accessorKey: "role",
-    header: ({ column }) => {
-      return (
-        <div
-          className="flex items-center gap-1 cursor-pointer"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Role
-           {column.getIsSorted() === 'desc' ? (
-            <ArrowDown className="ml-2 h-4 w-4" />
-          ) : column.getIsSorted() === 'asc' ? (
-            <ArrowUp className="ml-2 h-4" />
-          ) : (
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          )}
-        </div>
-      )
-    },
-    cell: ({ row }) => <div className="text-slate-600 dark:text-slate-300">{row.getValue("role")}</div>,
+    header: ({ column }) => <SortableHeader column={column} title="Role" />,
+    cell: ({ row }) => <div className="text-sm">{row.getValue("role")}</div>,
   },
   {
     accessorKey: "gender",
-    header: ({ column }) => {
-      return (
-        <div
-          className="flex items-center gap-1 cursor-pointer"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Gender
-           {column.getIsSorted() === 'desc' ? (
-            <ArrowDown className="ml-2 h-4 w-4" />
-          ) : column.getIsSorted() === 'asc' ? (
-            <ArrowUp className="ml-2 h-4 w-4" />
-          ) : (
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          )}
-        </div>
-      )
-    },
-    cell: ({ row }) => <div className="text-slate-600 dark:text-slate-300">{row.getValue("gender")}</div>,
+    header: ({ column }) => <SortableHeader column={column} title="Gender" />,
+    cell: ({ row }) => <div className="text-sm">{row.getValue("gender")}</div>,
     enableHiding: true,
   },
   {
     accessorKey: "city",
-    header: ({ column }) => {
-      return (
-        <div
-          className="flex items-center gap-1 cursor-pointer"
-          onClick={() => column.toggleSorting(column.getIs_Sorted() === "asc")}
-        >
-          City
-           {column.getIsSorted() === 'desc' ? (
-            <ArrowDown className="ml-2 h-4 w-4" />
-          ) : column.getIsSorted() === 'asc' ? (
-            <ArrowUp className="ml-2 h-4 w-4" />
-          ) : (
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          )}
-        </div>
-      )
-    },
-    cell: ({ row }) => <div className="text-slate-600 dark:text-slate-300">{row.getValue("city")}</div>,
+    header: ({ column }) => <SortableHeader column={column} title="City" />,
+    cell: ({ row }) => <div className="text-sm">{row.getValue("city")}</div>,
     enableHiding: true,
   },
   {

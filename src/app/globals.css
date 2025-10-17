@@ -12,47 +12,56 @@ body {
 
 @layer base {
   :root {
-    --background: 206 14% 97%;
-    --foreground: 222 47% 11%;
-    --card: 206 14% 97%;
-    --card-foreground: 222 47% 11%;
-    --popover: 206 14% 97%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 203 92% 65%;
-    --primary-foreground: 222 47% 11%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 28% 44%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222 47% 11%;
+    --background: 30 56% 96%; /* #F8F1ED */
+    --foreground: 20 28% 18%; /* #3E2723 */
+
+    --card: 30 56% 96%;
+    --card-foreground: 20 28% 18%;
+
+    --popover: 30 56% 96%;
+    --popover-foreground: 20 28% 18%;
+
+    --primary: 16 100% 63%; /* #FF7043 */
+    --primary-foreground: 20 28% 18%;
+
+    --secondary: 20 100% 87%; /* #FFCCBC */
+    --secondary-foreground: 30 28% 34%; /* #795548 */
+
+    --muted: 20 100% 87%;
+    --muted-foreground: 20 28% 59%; /* #BF8B6E */
+
+    --accent: 20 100% 90%; /* #FFAB91 */
+    --accent-foreground: 30 28% 34%;
+
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 222 47% 11%;
-    --radius: 0.5rem;
+    --destructive-foreground: 30 56% 96%;
+
+    --border: 20 28% 59%; /* #BF8B6E */
+    --input: 20 28% 59%;
+    --ring: 16 100% 63%;
+
+    --radius: 1.5rem;
   }
   .dark {
-    --background: 210 21% 11%;
-    --foreground: 210 40% 98%;
-    --card: 210 21% 11%;
-    --card-foreground: 210 40% 98%;
-    --popover: 210 21% 11%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 203 92% 65%;
-    --primary-foreground: 222 47% 11%;
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 17%;
-    --muted-foreground: 218 30% 64%;
-    --accent: 217 33% 17%;
-    --accent-foreground: 210 40% 98%;
+    --background: 20 28% 18%; /* #3E2723 */
+    --foreground: 20 43% 87%; /* #FBE9E7 */
+    --card: 20 28% 18%;
+    --card-foreground: 20 43% 87%;
+    --popover: 20 28% 18%;
+    --popover-foreground: 20 43% 87%;
+    --primary: 16 100% 63%;
+    --primary-foreground: 20 28% 18%;
+    --secondary: 30 28% 34%; /* #795548 */
+    --secondary-foreground: 20 43% 87%;
+    --muted: 30 28% 34%;
+    --muted-foreground: 20 28% 59%;
+    --accent: 20 33% 45%; /* A slightly darker accent for dark mode */
+    --accent-foreground: 20 43% 87%;
     --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 22% 32%;
-    --input: 217 22% 32%;
-    --ring: 203 92% 65%;
+    --destructive-foreground: 20 43% 87%;
+    --border: 30 28% 34%;
+    --input: 30 28% 34%;
+    --ring: 16 100% 63%;
   }
 }
 
@@ -61,7 +70,33 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-gradient-to-br from-background to-sky-100 dark:from-background-dark dark:to-sky-900/50 text-foreground;
+    @apply bg-gradient-to-br from-background to-secondary text-foreground;
     min-height: max(884px, 100dvh);
+  }
+}
+
+@layer components {
+  .btn-clay {
+    @apply bg-secondary text-secondary-foreground shadow-soft transition-all duration-200 ease-soft-bounce hover:bg-accent hover:shadow-soft-hover hover:-translate-y-0.5 active:translate-y-px active:scale-[0.98] active:shadow-sm;
+  }
+  
+  .input-clay {
+      @apply bg-secondary border border-border shadow-inner-sm transition-all duration-200 ease-in-out focus:border-primary focus:shadow-[0_0_0_3px_rgba(255,112,67,0.3)];
+  }
+
+  .table-clay {
+    @apply bg-white/60 dark:bg-background/60 backdrop-blur-sm rounded-xl shadow-soft;
+  }
+
+  .pagination-btn-clay {
+    @apply bg-secondary border border-border text-secondary-foreground shadow-[0_3px_6px_rgba(0,0,0,0.08)] transition-all duration-200 ease-soft-bounce hover:enabled:bg-accent hover:enabled:-translate-y-px hover:enabled:shadow-[0_4px_8px_rgba(0,0,0,0.12)] active:enabled:translate-y-px active:enabled:scale-[0.98] active:enabled:shadow-[0_2px_4px_rgba(0,0,0,0.05)] disabled:bg-background disabled:text-muted-foreground disabled:cursor-not-allowed disabled:shadow-none;
+  }
+
+  .sort-icon {
+    @apply opacity-50 transition-opacity duration-200 ease-in-out;
+  }
+
+  th:hover .sort-icon {
+    @apply opacity-100;
   }
 }

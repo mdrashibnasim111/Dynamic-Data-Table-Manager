@@ -17,8 +17,6 @@ export default {
       },
       colors: {
         background: 'hsl(var(--background))',
-        "background-light": "#f6f7f8",
-        "background-dark": "#101922",
         foreground: 'hsl(var(--foreground))',
         card: {
           DEFAULT: 'hsl(var(--card))',
@@ -70,10 +68,18 @@ export default {
         },
       },
       borderRadius: {
-        DEFAULT: "0.25rem",
-        lg: "0.5rem",
-        xl: "0.75rem",
+        DEFAULT: "1.5rem",
+        lg: "2rem",
+        xl: "2.5rem",
         full: "9999px"
+      },
+      boxShadow: {
+        "soft": "0px 8px 15px rgba(0, 0, 0, 0.1), 0px 4px 6px rgba(0, 0, 0, 0.05)",
+        "soft-hover": "0px 10px 20px rgba(0, 0, 0, 0.15), 0px 5px 10px rgba(0, 0, 0, 0.08)",
+        "inner-sm": "inset 0px 2px 4px rgba(0, 0, 0, 0.05)",
+      },
+      transitionTimingFunction: {
+        'soft-bounce': 'cubic-bezier(0.175, 0.885, 0.32, 1.275)',
       },
       keyframes: {
         'accordion-down': {

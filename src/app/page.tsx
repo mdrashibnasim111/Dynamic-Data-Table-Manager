@@ -12,12 +12,12 @@ export default function Home() {
   const [data] = useState<User[]>(usersData);
 
   return (
-    <div className="relative flex h-auto min-h-screen w-full flex-col bg-gradient-to-br from-background-light to-sky-100 dark:from-background-dark dark:to-sky-900/50 font-display text-slate-800 dark:text-slate-200">
+    <div className="relative flex h-auto min-h-screen w-full flex-col">
       <header className="flex items-center justify-between bg-transparent p-4">
-        <h1 className="text-lg font-bold text-slate-800 dark:text-white flex-1">Data Table</h1>
+        <h1 className="text-2xl font-bold text-foreground flex-1">Data Table</h1>
         <div className="flex items-center justify-end space-x-2">
           <ThemeToggle />
-          <Button variant="ghost" size="icon" className="flex items-center justify-center rounded-full h-10 w-10 text-slate-600 dark:text-slate-300 hover:bg-primary/10 dark:hover:bg-primary/20">
+          <Button variant="ghost" size="icon" className="btn-clay flex items-center justify-center rounded-full h-12 w-12 text-foreground">
             <MoreVertical className="h-5 w-5" />
           </Button>
         </div>

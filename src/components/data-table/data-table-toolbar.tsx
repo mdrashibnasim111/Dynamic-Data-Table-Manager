@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Table } from "@tanstack/react-table"
@@ -74,22 +73,22 @@ export function DataTableToolbar<TData>({
 
   return (
     <>
-    <div className="p-4">
+      <div className="p-4">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 dark:text-slate-500" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder="Search"
             value={(table.getState().globalFilter as string) ?? ""}
             onChange={(event) => table.setGlobalFilter(event.target.value)}
-            className="w-full rounded-lg bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 py-3 pl-10 pr-4 text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-primary"
+            className="input-clay w-full rounded-xl py-4 pl-12 pr-6 text-foreground placeholder:text-muted-foreground focus:outline-none"
           />
         </div>
       </div>
-      <div className="px-4 pb-4 flex justify-between items-center">
+      <div className="px-4 pb-4 flex justify-between items-center gap-2">
         <Button
           variant="ghost"
           onClick={() => setIsManageColumnsOpen(true)}
-          className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 font-medium py-2 px-3 rounded-lg hover:bg-slate-200/50 dark:hover:bg-slate-700/50"
+          className="btn-clay flex items-center gap-2 text-sm font-medium py-3 px-5 rounded-xl whitespace-nowrap"
         >
           <SlidersHorizontal className="h-4 w-4" />
           <span>Manage Columns</span>
@@ -106,7 +105,7 @@ export function DataTableToolbar<TData>({
               variant="ghost"
               size="sm"
               onClick={() => fileInputRef.current?.click()}
-               className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 font-medium py-2 px-3 rounded-lg hover:bg-slate-200/50 dark:hover:bg-slate-700/50"
+               className="btn-clay flex items-center gap-2 text-sm font-medium py-3 px-5 rounded-xl"
             >
               <FileUp className="h-4 w-4" />
               <span>Import</span>
@@ -115,7 +114,7 @@ export function DataTableToolbar<TData>({
                 variant="ghost" 
                 size="sm" 
                 onClick={handleExport}
-                className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 font-medium py-2 px-3 rounded-lg hover:bg-slate-200/50 dark:hover:bg-slate-700/50"
+                className="btn-clay flex items-center gap-2 text-sm font-medium py-3 px-5 rounded-xl"
             >
               <FileDown className="h-4 w-4" />
               <span>Export</span>

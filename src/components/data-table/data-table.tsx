@@ -136,16 +136,16 @@ export function DataTable<TData extends User, TValue>({
           setOriginalData(newData)
         }}
       />
-      <div className="flex-1 overflow-x-auto">
-        <div className="min-w-full inline-block align-middle">
-          <div className="overflow-hidden">
-            <Table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
-              <TableHeader className="bg-slate-100/50 dark:bg-slate-800/50 backdrop-blur-sm">
+      <div className="flex-1 overflow-x-auto p-4 pt-0">
+        <div className="min-w-full inline-block align-middle table-clay">
+          <div className="overflow-hidden rounded-xl">
+            <Table className="min-w-full divide-y divide-border">
+              <TableHeader className="bg-secondary/70 dark:bg-background/70 backdrop-blur-sm">
                 {table.getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id} className="border-slate-200 dark:border-slate-700">
+                  <TableRow key={headerGroup.id} className="border-border">
                     {headerGroup.headers.map((header) => {
                       return (
-                        <TableHead key={header.id} className="px-4 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                        <TableHead key={header.id} className="px-6 py-4 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                           {header.isPlaceholder
                             ? null
                             : flexRender(
@@ -158,16 +158,16 @@ export function DataTable<TData extends User, TValue>({
                   </TableRow>
                 ))}
               </TableHeader>
-              <TableBody className="divide-y divide-slate-200 dark:divide-slate-700 bg-white/30 dark:bg-slate-800/30 backdrop-blur-sm">
+              <TableBody className="divide-y divide-border">
                 {table.getRowModel().rows?.length ? (
                   table.getRowModel().rows.map((row) => (
                     <TableRow
                       key={row.id}
                       data-state={row.getIsSelected() && "selected"}
-                      className="hover:bg-slate-100/50 dark:hover:bg-slate-800/50"
+                      className="hover:bg-accent/50"
                     >
                       {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id} className="px-4 py-3 whitespace-nowrap text-sm">
+                        <TableCell key={cell.id} className="px-6 py-4 whitespace-nowrap">
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext()
