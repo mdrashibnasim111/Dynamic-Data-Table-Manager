@@ -31,14 +31,15 @@ import { DataTableToolbar } from "./data-table-toolbar"
 import { useLocalStorage } from "@/hooks/use-local-storage"
 import { columns as defaultColumns } from "./columns"
 import { User } from "@/lib/data"
-import { useToast } from "@/hooks/use-toast"
 
 declare module '@tanstack/react-table' {
   interface TableMeta<TData extends RowData> {
-    updateData: (rowIndex: number, columnId: string, value: unknown) => void
+    updateData: (rowIndex: number, data: TData) => void
     removeRow: (rowIndex: number) => void;
     setData: (data: TData[]) => void
     addColumn: (column: ColumnDef<TData>) => void
+    hideRows: (rowIds: string[]) => void
+    showAllRows: () => void
   }
 }
 
@@ -49,8 +50,8 @@ interface DataTableProps<TData extends User, TValue> {
 export function DataTable<TData extends User, TValue>({
   data: defaultData,
 }: DataTableProps<TData, TValue>) {
-  const { toast } = useToast()
   const [data, setData] = React.useState(defaultData)
+  const [hiddenRowsData, setHiddenRowsData] = React.useState<TData[]>([])
   const [originalData, setOriginalData] = React.useState(defaultData)
   const [isMounted, setIsMounted] = React.useState(false);
 
@@ -79,14 +80,19 @@ export function DataTable<TData extends User, TValue>({
       globalFilter,
     },
     meta: {
-      updateData: (rowIndex, columnId, value) => {
+      updateData: (rowIndex, updatedRow) => {
         setData(old =>
           old.map((row, index) => {
             if (index === rowIndex) {
-              return {
-                ...old[rowIndex]!,
-                [columnId]: value,
-              }
+              return updatedRow;
+            }
+            return row
+          })
+        )
+        setOriginalData(old =>
+          old.map((row, index) => {
+            if (index === rowIndex) {
+              return updatedRow;
             }
             return row
           })
@@ -108,7 +114,17 @@ export function DataTable<TData extends User, TValue>({
           cell: ({ row }) => <div>{row.original[newColumnDef.accessorKey as keyof User]}</div>
         };
         setColumns(prev => [...prev.slice(0, -1), newColumn, prev.slice(-1)[0]])
-      }
+      },
+      hideRows: (rowIds: string[]) => {
+        const rowsToHide = data.filter(row => rowIds.includes(row.id));
+        setHiddenRowsData(prev => [...prev, ...rowsToHide]);
+        setData(prev => prev.filter(row => !rowIds.includes(row.id)));
+        table.resetRowSelection();
+      },
+      showAllRows: () => {
+        setData(prev => [...prev, ...hiddenRowsData]);
+        setHiddenRowsData([]);
+      },
     },
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
@@ -122,6 +138,7 @@ export function DataTable<TData extends User, TValue>({
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
     globalFilterFn: "includesString",
+    getRowId: (row) => row.id,
   })
 
   return (
@@ -133,6 +150,7 @@ export function DataTable<TData extends User, TValue>({
             setData(newData)
             setOriginalData(newData)
           }}
+          showAllRowsVisible={hiddenRowsData.length > 0}
         />
       </div>
       <div className="flex-1 overflow-auto">

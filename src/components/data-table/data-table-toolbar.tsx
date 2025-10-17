@@ -2,7 +2,7 @@
 "use client"
 
 import { Table } from "@tanstack/react-table"
-import { FileDown, FileUp, SlidersHorizontal, Search } from "lucide-react"
+import { FileDown, FileUp, SlidersHorizontal, Search, EyeOff, Eye } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"
@@ -15,11 +15,13 @@ import { User } from "@/lib/data"
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
   setData: (data: TData[]) => void
+  showAllRowsVisible: boolean
 }
 
 export function DataTableToolbar<TData>({
   table,
   setData,
+  showAllRowsVisible
 }: DataTableToolbarProps<TData>) {
   const { toast } = useToast()
   const fileInputRef = React.useRef<HTMLInputElement>(null)
@@ -53,7 +55,7 @@ export function DataTableToolbar<TData>({
     const visibleColumns = table.getVisibleLeafColumns().filter(c => c.id !== 'select' && c.id !== 'actions')
     const header = visibleColumns.map(c => c.id)
     const rows = table.getRowModel().rows.map(row => {
-        const rowData: { [key: string]: any } = {}
+        const rowData: { [key:string]: any } = {}
         visibleColumns.forEach(col => {
             rowData[col.id] = (row.original as any)[col.id]
         })
@@ -72,6 +74,23 @@ export function DataTableToolbar<TData>({
       description: "The data has been exported to a CSV file.",
     })
   }
+
+  const handleHideSelected = () => {
+    const selectedRowIds = table.getSelectedRowModel().rows.map(row => row.id);
+    (table.options.meta as any)?.hideRows(selectedRowIds);
+    toast({
+      title: `${selectedRowIds.length} rows hidden`,
+    })
+  }
+
+  const handleShowAll = () => {
+    (table.options.meta as any)?.showAllRows();
+    toast({
+      title: 'All rows are now visible',
+    })
+  }
+
+  const isAnyRowSelected = table.getSelectedRowModel().rows.length > 0;
 
   return (
     <>
@@ -94,6 +113,32 @@ export function DataTableToolbar<TData>({
             <SlidersHorizontal className="h-4 w-4" />
             <span>Manage Columns</span>
           </Button>
+
+          <div className="flex flex-grow sm:flex-grow-0 items-center gap-2 w-full sm:w-auto">
+            {isAnyRowSelected && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleHideSelected}
+                className="btn-clay flex-1 bg-red-500/10 text-red-700 dark:bg-red-500/20 dark:text-red-400 border-red-500/20 hover:bg-red-500/20"
+              >
+                <EyeOff className="h-4 w-4" />
+                <span>Hide Selected</span>
+              </Button>
+            )}
+            {showAllRowsVisible && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleShowAll}
+                className="btn-clay flex-1 bg-green-500/10 text-green-700 dark:bg-green-500/20 dark:text-green-400 border-green-500/20 hover:bg-green-500/20"
+              >
+                <Eye className="h-4 w-4" />
+                <span>Show All</span>
+              </Button>
+            )}
+          </div>
+
           <div className="flex flex-grow sm:flex-grow-0 items-center gap-2 w-full sm:w-auto">
               <input
                 type="file"
