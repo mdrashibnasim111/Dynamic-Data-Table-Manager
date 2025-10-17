@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { Table, ColumnDef } from '@tanstack/react-table';
 import { User } from '@/lib/data';
+import { Label } from '../ui/label';
 
 interface ManageColumnsProps<TData> {
   isOpen: boolean;
@@ -58,14 +59,17 @@ export function ManageColumns<TData extends User>({ isOpen, onClose, table }: Ma
               return (
                 column.getCanHide() && (
                   <div key={column.id} className="flex items-center gap-4 px-4 py-3 hover:bg-accent/50 transition-colors">
-                    <div className="flex items-center justify-center rounded-lg bg-secondary shrink-0 size-10 text-secondary-foreground">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256"><path d="M170.48,115.7A44,44,0,0,0,140,40H72a8,8,0,0,0-8,8V200a8,8,0,0,0,8,8h80a48,48,0,0,0,18.48-92.3ZM80,56h60a28,28,0,0,1,0,56H80Zm72,136H80V128h72a32,32,0,0,1,0,64Z"></path></svg>
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-foreground font-medium capitalize">{column.id.replace(/_/g, ' ')}</p>
-                      <p className="text-muted-foreground text-sm">Text</p>
-                    </div>
+                     <Label htmlFor={`switch-${column.id}`} className='flex-1 flex items-center gap-4 cursor-pointer'>
+                      <div className="flex items-center justify-center rounded-lg bg-secondary shrink-0 size-10 text-secondary-foreground">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256"><path d="M170.48,115.7A44,44,0,0,0,140,40H72a8,8,0,0,0-8,8V200a8,8,0,0,0,8,8h80a48,48,0,0,0,18.48-92.3ZM80,56h60a28,28,0,0,1,0,56H80Zm72,136H80V128h72a32,32,0,0,1,0,64Z"></path></svg>
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-foreground font-medium capitalize">{column.id.replace(/_/g, ' ')}</p>
+                        <p className="text-muted-foreground text-sm">Text</p>
+                      </div>
+                    </Label>
                     <Switch
+                      id={`switch-${column.id}`}
                       checked={column.getIsVisible()}
                       onCheckedChange={(value) => column.toggleVisibility(!!value)}
                       aria-label="Toggle column visibility"
@@ -97,4 +101,3 @@ export function ManageColumns<TData extends User>({ isOpen, onClose, table }: Ma
     </div>
   );
 }
-
