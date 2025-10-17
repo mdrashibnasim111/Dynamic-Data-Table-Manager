@@ -147,7 +147,7 @@ export function DataTableToolbar<TData>({
         <Button
           variant="outline"
           size="sm"
-          className="ml-auto hidden lg:flex"
+          className="ml-auto flex"
           onClick={() => setIsManageColumnsOpen(true)}
         >
           <SlidersHorizontal className="mr-2 h-4 w-4" />
