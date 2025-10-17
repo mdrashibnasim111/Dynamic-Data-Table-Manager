@@ -12,7 +12,6 @@ interface ManageColumnsProps<TData> {
   isOpen: boolean;
   onClose: () => void;
   table: Table<TData>;
-  setData: (data: TData[]) => void;
 }
 
 export function ManageColumns<TData extends User>({ isOpen, onClose, table }: ManageColumnsProps<TData>) {
@@ -98,3 +97,4 @@ export function ManageColumns<TData extends User>({ isOpen, onClose, table }: Ma
     </div>
   );
 }
+

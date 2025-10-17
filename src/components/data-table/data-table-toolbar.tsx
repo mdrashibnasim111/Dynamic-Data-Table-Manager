@@ -1,3 +1,4 @@
+
 "use client"
 
 import { Table } from "@tanstack/react-table"
@@ -63,7 +64,7 @@ export function DataTableToolbar<TData>({
         data: rows
     });
 
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" })
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-t;" })
     saveAs(blob, "datagrid_pro_export.csv")
     toast({
       title: "Export Complete",
@@ -125,7 +126,6 @@ export function DataTableToolbar<TData>({
         isOpen={isManageColumnsOpen} 
         onClose={() => setIsManageColumnsOpen(false)}
         table={table}
-        setData={setData}
       />
     </>
   )
