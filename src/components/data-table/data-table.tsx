@@ -128,15 +128,17 @@ export function DataTable<TData extends User, TValue>({
   })
 
   return (
-    <>
-      <DataTableToolbar 
-        table={table}
-        setData={(newData) => {
-          setData(newData)
-          setOriginalData(newData)
-        }}
-      />
-      <div className="flex-1 overflow-x-auto">
+    <div className="flex-1 flex flex-col">
+      <div className="px-4">
+        <DataTableToolbar 
+          table={table}
+          setData={(newData) => {
+            setData(newData)
+            setOriginalData(newData)
+          }}
+        />
+      </div>
+      <div className="flex-1 overflow-x-auto px-4">
         <div className="table-clay min-w-full">
           <div className="overflow-hidden rounded-lg">
             <Table className="min-w-full divide-y divide-border">
@@ -192,6 +194,6 @@ export function DataTable<TData extends User, TValue>({
         </div>
       </div>
       <DataTablePagination table={table} />
-    </>
+    </div>
   )
 }
